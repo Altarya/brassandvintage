@@ -1,0 +1,50 @@
+{
+  "general": {
+    "type" : "engine_car",
+		"materials" : ["minecraft:piston:0:9", "minecraft:obsidian:0:5", "minecraft:iron_ingot:0:1"]
+  },
+	
+	"engine" : {
+    "isAutomatic" : false,
+    "starterPower" : 11,
+    "starterDuration" : 20,
+    "maxRPM" : 1600,
+    "fuelConsumption" : 0.2,
+	"fuelType" : "gasoline",
+    "gearRatios" : [-4.0, 0.0, 2.75, 1.0]
+	},
+   "rendering": {
+		"rotatableModelObjects" : [
+			{
+				"partName" : "$Fan",
+				"rotationPoint" : [0.000000, 0.296875, 0.656250],
+				"rotationAxis" : [0.0, 0.0, 1.0],
+				"rotationVariable" : "engine"
+			},
+			{
+				"partName" : "$Fan",
+				"rotationPoint" : [0.0, 0.001, 0.0],
+				"rotationAxis" : [0.000000, 0.000000, 1.000000],
+				"rotationVariable" : "engine"
+			},
+			{
+				"partName" : "$Fan",
+				"rotationPoint" : [0.0, -0.001, 0.0],
+				"rotationAxis" : [0.000000, 0.000000, -1.000000],
+				"rotationVariable" : "engine"
+			},
+			{
+				"partName" : "$Block",
+				"rotationPoint" : [0.0, 0.001, 0.0],
+				"rotationAxis" : [0.000000, 0.000000, 1.000000],
+				"rotationVariable" : "engine"
+			},
+			{
+				"partName" : "$Block",
+				"rotationPoint" : [0.0, -0.001, 0.0],
+				"rotationAxis" : [0.000000, 0.000000, -1.000000],
+				"rotationVariable" : "engine"
+			}
+		]
+	}
+}
