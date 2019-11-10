@@ -1,4 +1,4 @@
-package alty.brassandvintage;
+package com.alty.brassandvintage;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
