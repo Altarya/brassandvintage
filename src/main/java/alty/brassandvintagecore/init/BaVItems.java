@@ -9,5 +9,7 @@ import net.minecraft.item.Item;
 public class BaVItems {
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 	
-	public static final Item VANADIUM_INGOT = new BaVItemBase();
+	public static BaVItemBase addItem(String itemName) {
+	    return new BaVItemBase(itemName);
+	}
 }
