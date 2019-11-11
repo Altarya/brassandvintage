@@ -23,7 +23,7 @@
 
   "motorized" : {
     "fuelCapacity" : 20000,
-    "hornSound" : "mtsofficialpack:horn_car",
+    "hornSound" : "brassandvintage:horn1",
      "instruments" : [
 			{
 				"pos" : [-0.05, 1.08, 2.93],
@@ -84,7 +84,7 @@
       "isController" : true
     },
 		{
-      "pos" : [-0.4375, 0.99, 0.59],
+      "pos" : [-0.4475, 0.99, 0.59],
       "types" : ["seat"],
 			"minValue" : 0,
 			"maxValue" : 3
@@ -96,7 +96,7 @@
 			"maxValue" : 3
     },
 	{
-      "pos" : [-0.4375, 0.99, 0.59],
+      "pos" : [-0.4475, 0.99, 0.59],
       "types" : ["seat"],
 			"minValue" : 0,
 			"maxValue" : 3
@@ -114,7 +114,7 @@
 			"maxValue" : 100
     },
 	{
-      "pos" : [0.0, 0.169, 3.779],
+      "pos" : [-0.0033, 0.169, 3.775],
       "types" : ["custom"],
 			"customTypes" : ["enginecover"],
 			"minValue" : 0,
@@ -142,9 +142,51 @@
 			"maxValue" : 10.0
     },
 	{
-      "pos" : [-0.00005, 1.22, 0.22],
+      "pos" : [0.0, 1.22, 0.21],
       "types" : ["custom"],
 			"customTypes" : ["roof"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.0, 0.35, -0.05],
+      "types" : ["custom"],
+			"customTypes" : ["trailerhook"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.0, 0.45, -0.25],
+      "types" : ["custom"],
+			"customTypes" : ["extratire"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.91, 0.72, 0.805],
+      "types" : ["custom"],
+			"customTypes" : ["doorright"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.91, 0.72, 2.367],
+      "types" : ["custom"],
+			"customTypes" : ["doorright"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [-0.91, 0.72, 0.805],
+      "types" : ["custom"],
+			"customTypes" : ["doorleft"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [-0.91, 0.72, 2.367],
+      "types" : ["custom"],
+			"customTypes" : ["doorleft"],
 			"minValue" : 0,
 			"maxValue" : 10.0
     },
@@ -158,37 +200,113 @@
 	
   "collision": [
     {
-      "pos" : [-0.6, 0.9, 3.3],
+      "pos" : [-0.6, 0.2, 1.0],
       "width" : 1.2,
-      "height" : 0.15
+      "height" : 0.2
     },
 		 {
-      "pos" : [0.6, 0.9, 3.0],
+      "pos" : [0.6, 0.2, 1.0],
       "width" : 1.2,
-      "height" : 0.15
+      "height" : 0.2
     },
-   {
-      "pos" : [-0.6, 0.9, 3.3],
+	{
+      "pos" : [-0.6, 0.2, 2.0],
       "width" : 1.2,
-      "height" : 0.15
+      "height" : 0.2
     },
 		 {
-      "pos" : [0.6, 0.9, 3.3],
+      "pos" : [0.6, 0.2, 2.0],
       "width" : 1.2,
-      "height" : 0.15
+      "height" : 0.2
     },
-		{
-      "pos" : [0, 0.3, -0.25],
+	{
+      "pos" : [-0.6, 0.2, 0.8],
       "width" : 1.0,
-      "height" : 0.15
+      "height" : 0.2
+    },
+		 {
+      "pos" : [0.6, 0.2, 0.8],
+      "width" : 1.0,
+      "height" : 0.2
+    },
+	{
+      "pos" : [-0.6, 0.2, 2.7],
+      "width" : 1.2,
+      "height" : 0.1
+    },
+		 {
+      "pos" : [0.6, 0.2, 2.7],
+      "width" : 1.2,
+      "height" : 0.1
+    },
+    
+	{
+      "pos" : [-0.4, 0.7, 0.2],
+      "width" : 0.7,
+      "height" : 0.7
+    },
+		 {
+      "pos" : [0.4, 0.7, 0.2],
+      "width" : 0.7,
+      "height" : 0.7
+    },
+	{
+      "pos" : [-0.4, 0.5, 1.6],
+      "width" : 0.7,
+      "height" : 0.9
+    },
+	{
+      "pos" : [0.4, 0.5, 1.6],
+      "width" : 0.7,
+      "height" : 0.9
+    },
+	{
+      "pos" : [0.0, 0.5, 3.8],
+      "width" : 0.7,
+      "height" : 0.9
+    },
+	{
+      "pos" : [0.0, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 1.9
+    },
+	{
+      "pos" : [0.3, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 1.9
+    },
+	{
+      "pos" : [0.5, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 1.9
+    },
+	{
+      "pos" : [0.7, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 1.9
+    },
+	{
+      "pos" : [-0.3, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 1.9
+    },
+	{
+      "pos" : [-0.5, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 1.9
+    },
+	{
+      "pos" : [-0.7, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 1.9
     },
 		{
-      "pos" : [0, 1.725, 1.0],
+      "pos" : [0, 2.425, 2.0],
       "width" : 2.2,
       "height" : 0.15
     },
 		{
-      "pos" : [0, 1.725, 0.6],
+      "pos" : [0, 2.425, 0.9],
       "width" : 2.2,
       "height" : 0.15
     }
@@ -196,7 +314,7 @@
 
   "rendering": {
 		"numberWindows" : 1,
-		"defaultDisplayText" : "RZ-000",
+		"defaultDisplayText" : "RZ-00",
 		 "hudBackplaneTexturePercentages" : [0.5, 0.625, 0.078125, 0.203125],
 		"hudMouldingTexturePercentages" : [0.5, 0.625, 0.078125, 0.203125],
     "displayTextMaxLength" : 6,
