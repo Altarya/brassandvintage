@@ -1,5 +1,6 @@
 package alty.brassandvintagecore.blocks;
 
+import alty.brassandvintagecore.init.BaVBlocks;
 import alty.brassandvintagecore.init.BaVItems;
 import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.objects.IHasModel;
@@ -13,7 +14,7 @@ public class BaVBlockBase extends Block implements IHasModel {
 	public BaVBlockBase(String name, Material material) {
 		super(material);
 		setUnlocalizedName(name);
-		setRegistryName(name);
+		setRegistryName("json_" + name);
 		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		
 		BaVBlocks.BLOCKS.add(this);
@@ -22,6 +23,6 @@ public class BaVBlockBase extends Block implements IHasModel {
 
 	@Override
 	public void registerModels() {
-			BavInitialization.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+			BavInitialization.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "normal");
 	}
 }

@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * 
  * @author don_bruce
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = MTSPackLoader.MODID)
 //DO NOT MODIFY THIS LINE!  Modify the things below this line instead.  Modifying this line will cause your pack to crash.
 @Mod(modid=MTSPackLoader.MODID, name=MTSPackLoader.MODNAME, version=MTSPackLoader.MODVER, dependencies=MTSPackLoader.DEPS, acceptedMinecraftVersions=MTSPackLoader.MCVERS)
 public class MTSPackLoader{

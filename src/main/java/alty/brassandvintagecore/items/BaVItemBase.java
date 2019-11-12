@@ -1,6 +1,8 @@
-package alty.brassandvintagecore.init;
+package alty.brassandvintagecore.items;
 
 
+import alty.brassandvintagecore.init.BaVItems;
+import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.objects.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
