@@ -1,19 +1,20 @@
-package alty.brassandvintagecore.items;
+package alty.brassandvintagecore.init;
 
-import alty.brassandvintagecore.init.BaVItems;
-import alty.brassandvintagecore.init.BavInitialization;
+
 import alty.brassandvintagecore.objects.IHasModel;
-import alty.brassandvintagecore.proxy.ClientProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 public class BaVItemBase extends Item implements IHasModel{
+	
+
 		public BaVItemBase(String name) {
 			setUnlocalizedName(name);
-			setRegistryName(name);
+			setRegistryName("json_" + name);
 			setCreativeTab(CreativeTabs.MATERIALS);
 			
 			BaVItems.ITEMS.add(this);
+			
 		}
 
 		@Override

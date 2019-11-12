@@ -1,4 +1,4 @@
-package alty.brassandvintagecore.init;
+package alty.brassandvintagecore.blocks;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package alty.brassandvintagecore.blocks;
 
-import alty.brassandvintagecore.init.BaVBlocks;
 import alty.brassandvintagecore.init.BaVItems;
 import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.objects.IHasModel;

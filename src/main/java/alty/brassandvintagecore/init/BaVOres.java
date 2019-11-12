@@ -1,6 +1,7 @@
 package alty.brassandvintagecore.init;
 
 import alty.brassandvintagecore.blocks.BaVBlockBase;
+import alty.brassandvintagecore.blocks.BaVBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
