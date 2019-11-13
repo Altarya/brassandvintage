@@ -1,8 +1,7 @@
 package alty.brassandvintagecore.blocks;
 
-import alty.brassandvintagecore.init.BaVBlocks;
-import alty.brassandvintagecore.init.BaVItems;
 import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.objects.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,7 +13,7 @@ public class BaVBlockBase extends Block implements IHasModel {
 	public BaVBlockBase(String name, Material material) {
 		super(material);
 		setUnlocalizedName(name);
-		setRegistryName("json_" + name);
+		setRegistryName(name);
 		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 		
 		BaVBlocks.BLOCKS.add(this);

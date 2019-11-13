@@ -5,9 +5,9 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import org.apache.logging.log4j.Logger;
 import net.minecraftforge.fml.common.SidedProxy;
 import alty.brassandvintagecore.proxy.CommonProxy;
+import alty.brassandvintagecore.util.RegistryHandler;
 
 @Mod(modid = BavInitialization.MODID, name = BavInitialization.NAME, version = BavInitialization.VERSION)
 public class BavInitialization
@@ -18,7 +18,6 @@ public class BavInitialization
     public static final String COMMON_PROXY_CLASS = "alty.brassandvintagecore.proxy.CommonProxy";
     public static final String CLIENT_PROXY_CLASS = "alty.brassandvintagecore.proxy.ClientProxy";
 
-    private static Logger logger;
     
     @Mod.Instance
     public static BavInitialization instance;
@@ -28,7 +27,7 @@ public class BavInitialization
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        logger = event.getModLog();
+        RegistryHandler.otherBaVRegistries();
     }
 
     @EventHandler

@@ -1,15 +1,17 @@
 package alty.brassandvintagecore.util;
 
-import alty.brassandvintagecore.init.BaVBlocks;
-import alty.brassandvintagecore.init.BaVItems;
+import alty.brassandvintagecore.blocks.BaVBlocks;
 import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.objects.IHasModel;
+import alty.brassandvintagecore.world.gen.BaVOreGen;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @EventBusSubscriber(modid = BavInitialization.MODID)
 public class RegistryHandler {
@@ -36,5 +38,10 @@ public class RegistryHandler {
                 ((IHasModel)block).registerModels();
             }
         }
+	}
+	
+	
+	public static void otherBaVRegistries() {
+		GameRegistry.registerWorldGenerator(new BaVOreGen(), 0);
 	}
 }
