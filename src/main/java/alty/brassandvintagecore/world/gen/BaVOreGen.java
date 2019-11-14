@@ -1,5 +1,7 @@
 package alty.brassandvintagecore.world.gen;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import alty.brassandvintagecore.blocks.BaVBlocks;
@@ -11,27 +13,29 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class BaVOreGen implements IWorldGenerator {
 	private WorldGenerator ore_vanadinite;
 	//Define Ores
 	public BaVOreGen() {
-		ore_vanadinite = new WorldGenMinable(BaVBlocks.VANADINITE_ORE.getDefaultState(), 30, BlockMatcher.forBlock(Blocks.STONE));
+		ore_vanadinite = new WorldGenMinable(BaVBlocks.VANADINITE_ORE.getDefaultState(), 50, BlockMatcher.forBlock(Blocks.STONE));
 	}
 	//Define Sample Bits for Special Ores
 	public Block bit_vanadinite = BaVBlocks.VANADINITE_BIT;
 	public Block bit_vanadinite_sea = BaVBlocks.VANADINITE_BIT_WATER;
 	
 	/* Bit of code borrowed from Geolosys and slightly modified for BaV
-	 * https://github.com/oitsjustjose/Geolosys/tree/1.12.x/src/main/java/com/oitsjustjose/geolosys/common/world
+	 * https://github.com/oitsjustjose/Geolosys
 	 * Credits go to them for their Sample Logic
 	 * PS: on the boolean bitType: false=Land Sample, true=Sea Sample
 	 */
@@ -131,9 +135,15 @@ public class BaVOreGen implements IWorldGenerator {
 		int geny = 64;
 		int genz = chunkZ * 16;
 		Biome testBiome = world.provider.getBiomeForCoords(new BlockPos(genx, geny, genz));
-		Biome swamp = Biomes.SWAMPLAND;
-		if(testBiome == swamp) {
-			runGeneratorSpecial(ore_vanadinite, world, random, chunkX, chunkZ, 1, 2, 15, bit_vanadinite, bit_vanadinite_sea);
+		
+		List<Type> WhitelistVanadinite = new ArrayList<Type>();
+		WhitelistVanadinite.addAll(BiomeDictionary.getTypes(Biomes.DESERT));
+		
+		List<Type> testType = new ArrayList<Type>();
+		WhitelistVanadinite.addAll(BiomeDictionary.getTypes(testBiome));
+		
+		if(testType.contains(WhitelistVanadinite)) {
+			runGeneratorSpecial(ore_vanadinite, world, random, chunkX, chunkZ, 10, 2, 15, bit_vanadinite, bit_vanadinite_sea);
 		}
 		
 		
@@ -142,33 +152,33 @@ public class BaVOreGen implements IWorldGenerator {
 	
 	private void runGeneratorBit(Block bitBlock, Block bitBlockSea, World world, Random rand, int chunkX, int chunkZ) {
 		BlockPos bitPos = getSamplePos(world, chunkX, chunkZ, oreY, rand, false);
-			world.setBlockState(bitPos, bitBlock.getDefaultState());
-			System.out.println("A vanadinite land bit has been spawned at "+bitPos);
-			BlockPos bitPosSea = getSamplePos(world, chunkX, chunkZ, oreY, rand, true);
-			world.setBlockState(bitPosSea, bitBlockSea.getDefaultState());
-			System.out.println("A vanadinite sea bit has been spawned at "+bitPos);
+			int bitCount = rand.nextInt(5);
+			int j = 0;
+			while(j <= bitCount) {
+				world.setBlockState(bitPos, bitBlock.getDefaultState());
+				System.out.println("A vanadinite land bit has been spawned at "+bitPos);
+				BlockPos bitPosSea = getSamplePos(world, chunkX, chunkZ, oreY, rand, true);
+				world.setBlockState(bitPosSea, bitBlockSea.getDefaultState());
+				System.out.println("A vanadinite sea bit has been spawned at "+bitPos);
+				j++;
+			}
 		}
 	
 	
 	private void runGeneratorSpecial(WorldGenerator gen, World world, Random rand, int chunkX, int chunkZ, int chance, int minHeight, int maxHeight, Block bitBlock, Block bitBlockSea) {
 		if(minHeight > maxHeight || maxHeight > 256) throw new IllegalArgumentException("A BaV Ore was generated out of bounds!");
-		int i = 0;
-		boolean chunkContainsVein = false;
-		while(i <= chance && chunkContainsVein == false) {
-			int x = chunkX * 16 + rand.nextInt(16);
-			int z = chunkZ * 16 + rand.nextInt(16);
+		int i = rand.nextInt(1000);
+		
+		if(i <= chance) {
+			int x = chunkX * 16 + rand.nextInt(4);
+			int z = chunkZ * 16 + rand.nextInt(4);
 			oreY = minHeight + rand.nextInt(16);
+			BlockPos veinPos = new BlockPos(x, oreY, z);
+			System.out.println("A vanadinite vein has been spawned at " + veinPos);
 			
-			if(i < chance) {
-					BlockPos veinPos = new BlockPos(x, oreY, z);
-					System.out.println("A vanadinite vein has been spawned at " + veinPos);
-			}
-			if (i == chance-1) {
-				runGeneratorBit(bitBlock, bitBlockSea, world, rand, chunkX, chunkZ);
-				chunkContainsVein = true;
-			}
+			runGeneratorBit(bitBlock, bitBlockSea, world, rand, chunkX, chunkZ);
 			gen.generate(world, rand, new BlockPos(x, oreY, z));
-			
+						
 		}
 		
 	}
