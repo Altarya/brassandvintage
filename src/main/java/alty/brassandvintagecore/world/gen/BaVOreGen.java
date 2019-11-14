@@ -140,10 +140,10 @@ public class BaVOreGen implements IWorldGenerator {
 		WhitelistVanadinite.addAll(BiomeDictionary.getTypes(Biomes.DESERT));
 		
 		List<Type> testType = new ArrayList<Type>();
-		WhitelistVanadinite.addAll(BiomeDictionary.getTypes(testBiome));
+		testType.addAll(BiomeDictionary.getTypes(testBiome));
 		
-		if(testType.contains(WhitelistVanadinite)) {
-			runGeneratorSpecial(ore_vanadinite, world, random, chunkX, chunkZ, 10, 2, 15, bit_vanadinite, bit_vanadinite_sea);
+		if(testType.containsAll(WhitelistVanadinite)) {
+			runGeneratorSpecial(ore_vanadinite, world, random, chunkX, chunkZ, 1, 2, 15, bit_vanadinite, bit_vanadinite_sea);
 		}
 		
 		
