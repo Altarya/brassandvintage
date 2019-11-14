@@ -21,7 +21,6 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class BaVOreGen implements IWorldGenerator {
