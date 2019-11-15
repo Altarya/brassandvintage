@@ -44,70 +44,45 @@ public class BaVOreGen implements IWorldGenerator {
         int blockPosX = (PosX << 4) + random.nextInt(16);
         int blockPosZ = (PosZ << 4) + random.nextInt(16);
         BlockPos searchPos = new BlockPos(blockPosX, 0, blockPosZ);
-        if(bitType = false) {
-	        while (searchPos.getY() < world.getHeight())
-	        {
-	            if (world.getBlockState(searchPos.down()).isSideSolid(world, searchPos.down(), EnumFacing.UP))
-	            {
-	                // If the current block is air
-	                if (canReplace(world, searchPos))
-	                {
-	                    // If the block above this state is air,
-	                    if (canReplace(world, searchPos.up()))
-	                    {
-	                        // If it's above sea level it's fine
-	                        if (searchPos.getY() > world.getSeaLevel())
-	                        {
-	                            return searchPos;
-	                        }
-	                        // If not, it's gotta be at least 12 blocks away from it (i.e. below it) but at least above the deposit
-	                        else if (isWithinRange(world.getSeaLevel(), searchPos.getY(), 12) && searchPos.getY() < depositHeight)
-	                        {
-	                            return searchPos;
-	                        }
-	                    }
-	                }
+        if(bitType == false) {
+	        while (searchPos.getY() < world.getHeight()) {
+	            if (world.getBlockState(searchPos.down()).isSideSolid(world, searchPos.down(), EnumFacing.UP)
+	            		&& canReplace(world, searchPos) 			// If the current block is air
+	            		&& canReplace(world, searchPos.up()) 		// If the block above this state is air
+	            		&& searchPos.getY() > world.getSeaLevel() 	// If it's above sea level it's fine
+	            ) {   
+	                return searchPos;
+	            }
+	            // If not, it's gotta be at least 12 blocks away from it (i.e. below it) but at least above the deposit
+	            else if (isWithinRange(world.getSeaLevel(), searchPos.getY(), 12) && searchPos.getY() < depositHeight) {
+	                return searchPos;
 	            }
 	            searchPos = searchPos.up();
 	        }
-    	}
-        if(bitType==true) {
-	        while (searchPos.getY() < world.getHeight())
-	        {
-	            if (world.getBlockState(searchPos.down()).isSideSolid(world, searchPos.down(), EnumFacing.UP))
-	            {
-	                // If the current block is air
-	                if (canReplaceWater(world, searchPos))
-	                {
-	                    // If the block above this state is water or air,
-	                    if (canReplaceWater(world, searchPos.up()))
-	                    {
-	                        // If it's above sea level it's fine
-	                        if (searchPos.getY() > world.getSeaLevel())
-	                        {
-	                            return searchPos;
-	                        }
-	                        // If not, it's gotta be at least 12 blocks away from it (i.e. below it) but at least above the deposit
-	                        else if (isWithinRange(world.getSeaLevel(), searchPos.getY(), 12) && searchPos.getY() < depositHeight)
-	                        {
-	                            return searchPos;
-	                        }
-	                    }
-	                    else if (canReplace(world, searchPos.up()))
-	                    {
-	                        // If it's above sea level it's fine
-	                        if (searchPos.getY() > world.getSeaLevel())
-	                        {
-	                            return searchPos;
-	                        }
-	                        // If not, it's gotta be at least 12 blocks away from it (i.e. below it) but at least above the deposit
-	                        else if (isWithinRange(world.getSeaLevel(), searchPos.getY(), 12) && searchPos.getY() < depositHeight)
-	                        {
-	                            return searchPos;
-	                        }
-	                    }
+    	} else {
+	        while (searchPos.getY() < world.getHeight()) {
+	            if (world.getBlockState(searchPos.down()).isSideSolid(world, searchPos.down(), EnumFacing.UP)
+	            		&& canReplaceWater(world, searchPos)			// If the current block is air
+	            		&& canReplaceWater(world, searchPos.up())		// If the block above this state is water or air
+	               ) {
+                        // If it's above sea level it's fine
+                        if (searchPos.getY() > world.getSeaLevel()) {
+                            return searchPos;
+                        }
+                        // If not, it's gotta be at least 12 blocks away from it (i.e. below it) but at least above the deposit
+                        else if (isWithinRange(world.getSeaLevel(), searchPos.getY(), 12) && searchPos.getY() < depositHeight) {
+                            return searchPos;
+                        }
+                    } else if (canReplace(world, searchPos.up())) {
+                        // If it's above sea level it's fine
+                        if (searchPos.getY() > world.getSeaLevel()) {
+                            return searchPos;
+                        }
+                        // If not, it's gotta be at least 12 blocks away from it (i.e. below it) but at least above the deposit
+                        else if (isWithinRange(world.getSeaLevel(), searchPos.getY(), 12) && searchPos.getY() < depositHeight) {
+                            return searchPos;
+                        }
 	                }
-	            }
 	            searchPos = searchPos.up();
 	        }
         }

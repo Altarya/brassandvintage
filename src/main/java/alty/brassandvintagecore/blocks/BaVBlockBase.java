@@ -22,6 +22,6 @@ public class BaVBlockBase extends Block implements IHasModel {
 
 	@Override
 	public void registerModels() {
-			BavInitialization.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "normal");
+		BavInitialization.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "normal");
 	}
 }
