@@ -1,5 +1,6 @@
 package alty.brassandvintagecore.init;
 
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -24,6 +25,8 @@ public class BavInitialization
     @SidedProxy(clientSide = CLIENT_PROXY_CLASS, serverSide = COMMON_PROXY_CLASS)
     public static CommonProxy proxy;
 
+    static { FluidRegistry.enableUniversalBucket(); }
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {

@@ -1,6 +1,7 @@
 package alty.brassandvintagecore.util;
 
 import alty.brassandvintagecore.blocks.BaVBlocks;
+import alty.brassandvintagecore.fluids.BaVFluids;
 import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.objects.IHasModel;
@@ -42,6 +43,8 @@ public class RegistryHandler {
 	
 	
 	public static void otherBaVRegistries() {
+		BaVFluids.registerFluids();
 		GameRegistry.registerWorldGenerator(new BaVOreGen(), 0);
+		RenderHandler.registerustomMeshesAndStates();
 	}
 }
