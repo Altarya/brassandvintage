@@ -10,14 +10,19 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BaVBlockFluid extends BlockFluidClassic {
 
-	public BaVBlockFluid(String name, Fluid fluid, Material material) {
+	public BaVBlockFluid(String name, Fluid fluid, Material material, float slipperiness, int tickRate, int temperature) {
 		super(fluid, material);
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
+		this.setDefaultSlipperiness(slipperiness);
+		this.setTickRate(tickRate);
+		this.setTemperature(temperature);
+		
 		
 		BaVBlocks.BLOCKS.add(this);
 		BaVItems.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
 	}
+	
 	
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {

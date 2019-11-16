@@ -23,6 +23,8 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
+
+
 public class BaVOreGen implements IWorldGenerator {
 	private WorldGenerator ore_vanadinite;
 	//Define Ores
@@ -38,7 +40,7 @@ public class BaVOreGen implements IWorldGenerator {
 	 * Credits go to them for their Sample Logic
 	 * PS: on the boolean bitType: false=Land Sample, true=Sea Sample
 	 */
-	private BlockPos getSamplePos(World world, int PosX, int PosZ, int depositHeight, Random random, boolean bitType)
+	private static BlockPos getSamplePos(World world, int PosX, int PosZ, int depositHeight, Random random, boolean bitType)
     {
         int blockPosX = (PosX << 4) + random.nextInt(16);
         int blockPosZ = (PosZ << 4) + random.nextInt(16);
@@ -113,16 +115,16 @@ public class BaVOreGen implements IWorldGenerator {
         return world.getTopSolidOrLiquidBlock(searchPos);
 }
 	
-	private boolean isWithinRange(int posA, int posB, int range) {
+	private static boolean isWithinRange(int posA, int posB, int range) {
 		return (Math.abs(posA - posB) <= range);
 	}
-	private boolean canReplace(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
+	private static boolean canReplace(World world, BlockPos posate) {
+		IBlockState state = world.getBlockState(posate);
         Material mat = state.getMaterial();
-        return mat == Material.AIR || state.getBlock().isLeaves(state, world, pos) || state.getBlock().isFoliage(world, pos) || mat.isReplaceable();
+        return mat == Material.AIR || state.getBlock().isLeaves(state, world, posate) || state.getBlock().isFoliage(world, posate) || mat.isReplaceable();
 	}
-	private boolean canReplaceWater(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
+	private static boolean canReplaceWater(World world, BlockPos posate) {
+		IBlockState state = world.getBlockState(posate);
         Material mat = state.getMaterial();
         return mat == Material.WATER || mat.isReplaceable();
 	}
@@ -147,9 +149,9 @@ public class BaVOreGen implements IWorldGenerator {
 		
 		
 	}
-	public int oreY;
+	public static int oreY;
 	
-	private void runGeneratorBit(Block bitBlock, Block bitBlockSea, World world, Random rand, int chunkX, int chunkZ) {
+	static void runGeneratorBit(Block bitBlock, Block bitBlockSea, World world, Random rand, int chunkX, int chunkZ) {
 		BlockPos bitPos = getSamplePos(world, chunkX, chunkZ, oreY, rand, false);
 			int bitCount = rand.nextInt(5);
 			int j = 0;
@@ -177,8 +179,6 @@ public class BaVOreGen implements IWorldGenerator {
 			
 			runGeneratorBit(bitBlock, bitBlockSea, world, rand, chunkX, chunkZ);
 			gen.generate(world, rand, new BlockPos(x, oreY, z));
-						
 		}
-		
 	}
 }

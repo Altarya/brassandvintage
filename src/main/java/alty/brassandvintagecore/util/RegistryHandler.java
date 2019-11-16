@@ -6,6 +6,7 @@ import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.objects.IHasModel;
 import alty.brassandvintagecore.world.gen.BaVOreGen;
+import alty.brassandvintagecore.world.gen.BaVTarLake;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -44,7 +45,10 @@ public class RegistryHandler {
 	
 	public static void otherBaVRegistries() {
 		BaVFluids.registerFluids();
+		
 		GameRegistry.registerWorldGenerator(new BaVOreGen(), 0);
 		RenderHandler.registerustomMeshesAndStates();
+		
+		GameRegistry.registerWorldGenerator(new BaVTarLake(), 0);
 	}
 }
