@@ -11,17 +11,18 @@ import net.minecraftforge.client.model.ModelLoader;
 
 public class RenderHandler {
 	
-	//Tar
+	
 	public static void registerustomMeshesAndStates() {
 		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(BaVBlocks.TAR),new ItemMeshDefinition() {
 			@Override
 			public ModelResourceLocation getModelLocation(ItemStack stack) {
+				//tar
 				return new ModelResourceLocation("brassandvintagecore:tar", "fluid");
 				
 			}
 		});
 		
-		
+		//tar
 		ModelLoader.setCustomStateMapper(BaVBlocks.TAR, new StateMapperBase() {
 			@Override
 			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
