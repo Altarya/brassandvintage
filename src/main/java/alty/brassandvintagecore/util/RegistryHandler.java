@@ -44,6 +44,7 @@ public class RegistryHandler {
 	
 	
 	public static void otherBaVRegistries() {
+		
 		BaVFluids.registerFluids();
 		
 		GameRegistry.registerWorldGenerator(new BaVOreGen(), 0);
