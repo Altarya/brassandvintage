@@ -4,6 +4,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import net.minecraftforge.fml.common.SidedProxy;
@@ -36,6 +37,12 @@ public class BavInitialization
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-       
+    	RegistryHandler.BaVMutliblockRegistries();
     }
+    
+    @EventHandler
+	public void postInit(FMLPostInitializationEvent event){
+		proxy.postInitEnd(event);
+    }
+    
 }

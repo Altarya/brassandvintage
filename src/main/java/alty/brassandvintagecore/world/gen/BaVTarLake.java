@@ -40,7 +40,7 @@ public class BaVTarLake implements IWorldGenerator {
 				
 				
 				if(BlacklistTarLake.contains(testBiome) == false) {
-					generateStructure(TAR_LAKE, world, random, chunkX, chunkZ, 40, 10000, 31, Blocks.STONE);
+					generateStructure(TAR_LAKE, world, random, chunkX, chunkZ, 40, 1000, 31, Blocks.STONE);
 				}
 				break;
 		}

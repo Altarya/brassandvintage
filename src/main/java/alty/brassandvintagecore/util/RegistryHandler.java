@@ -4,9 +4,11 @@ import alty.brassandvintagecore.blocks.BaVBlocks;
 import alty.brassandvintagecore.fluids.BaVFluids;
 import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.items.BaVItems;
+import alty.brassandvintagecore.multiblocks.BaVTarDistiller;
 import alty.brassandvintagecore.objects.IHasModel;
 import alty.brassandvintagecore.world.gen.BaVOreGen;
 import alty.brassandvintagecore.world.gen.BaVTarLake;
+import blusunrize.immersiveengineering.api.MultiblockHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -42,6 +44,9 @@ public class RegistryHandler {
         }
 	}
 	
+	public static void BaVMutliblockRegistries() {
+		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
+	}
 	
 	public static void otherBaVRegistries() {
 		
