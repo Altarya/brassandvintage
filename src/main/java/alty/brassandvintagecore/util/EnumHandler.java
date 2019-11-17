@@ -3,8 +3,12 @@ package alty.brassandvintagecore.util;
 import net.minecraft.util.IStringSerializable;
 
 public class EnumHandler {
-	/*
+
 	public static enum EnumType implements IStringSerializable {
+
+	    RUBBER_LOG_VERTICAL(0, "rubbertree_vertical"),
+	    RUBBER_LOG_HORIZONTAL(1, "rubbertree_horizontal");
+
 		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
 		private final int meta;
 		private final String name, unlocalizedName;
@@ -47,5 +51,5 @@ public class EnumHandler {
 				META_LOOKUP[enumtype.getMeta()] = enumtype;
 			}
 		}
-	}*/
+	}
 }

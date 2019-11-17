@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod(modid=MTSPackLoader.MODID, name=MTSPackLoader.MODNAME, version=MTSPackLoader.MODVER, dependencies=MTSPackLoader.DEPS, acceptedMinecraftVersions=MTSPackLoader.MCVERS)
 public class MTSPackLoader{
 	//The ID for your pack.  Must be unique to every mod and pack in the world!
-	public static final String MODID="brassandvintage";
+	public static final String MODID= "brassandvintage";
 	//Short title for your pack.
 	public static final String MODNAME="Brass and Vintage";
 	//Pack version.  May be linked to from other packs to force specific versions.  Otherwise unused.

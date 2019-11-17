@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
 public class BaVBlockBase extends Block implements IHasModel {
+
 	public BaVBlockBase(String name, Material material) {
 		super(material);
 		setUnlocalizedName(name);

@@ -24,7 +24,7 @@ public class BaVBlocks {
 	//Fluid Blocks
 	public static final Block TAR = new BaVBlockFluid("tar", BaVFluids.TAR, BaVCustomMaterials.THICK_OIL, 1, 50, 20, true);
 	//Misc
-	public static final Block RUBBER_TREE_LOG = new BaVBlockBase("log_rubbertree", Material.WOOD);
+	public static final Block RUBBER_TREE_LOG = new BaVBlockLog("log_rubbertree", Material.WOOD);
 	public static final Block RUBBER_TREE_PLANKS = new BaVBlockBase("plank_rubbertree", Material.WOOD);
 	public static final Block RUBBER_TREE_LEAVES = new BaVBlockBase("leaf_rubbertree", Material.LEAVES);
 	public static final Block RUBBER_TREE_SAPLING = new BaVBlockBase("sapling_rubbertree", Material.PLANTS);
