@@ -1,16 +1,23 @@
 package alty.brassandvintagecore.world.gen;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import alty.brassandvintagecore.blocks.BaVBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class BaVTarLake implements IWorldGenerator {
@@ -21,8 +28,20 @@ public class BaVTarLake implements IWorldGenerator {
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 		switch(world.provider.getDimension()) {
 			case 0:
-				generateStructure(TAR_LAKE, world, random, chunkX, chunkZ, 50, 100, 31, Blocks.STONE);
 				
+				int genx = chunkX * 16;
+				int geny = 64;
+				int genz = chunkZ * 16;
+				Biome testBiome = world.provider.getBiomeForCoords(new BlockPos(genx, geny, genz));
+				
+				List<Biome> BlacklistTarLake = new ArrayList<Biome>();
+				BlacklistTarLake.add(Biomes.DEEP_OCEAN);
+				BlacklistTarLake.add(Biomes.OCEAN);
+				
+				
+				if(BlacklistTarLake.contains(testBiome) == false) {
+					generateStructure(TAR_LAKE, world, random, chunkX, chunkZ, 40, 10000, 31, Blocks.STONE);
+				}
 				break;
 		}
 		
@@ -36,13 +55,19 @@ public class BaVTarLake implements IWorldGenerator {
 		
 		BlockPos bpos = new BlockPos(x,y,z);
 		IBlockState testBlock = world.getBlockState(bpos);
+		int groundY = calculateGroundHeight(world, x, z);
 		
 		if(random.nextInt(chance) == 0) {
-			while(testBlock != topBlock.getDefaultState() && y <= structureHeight && y <= world.getHeight()) {
+			while(testBlock != topBlock.getDefaultState() && y <= structureHeight && y <= world.getHeight()  && y < groundY-structureHeight) {
 				y++;
 			}
-			if(y >= world.getHeight()) {
-				y = random.nextInt(maxY);
+			if(y >= world.getHeight() || y >= groundY) {
+				int setrand = groundY-structureHeight;
+				if(setrand<0) {
+					setrand = 1+random.nextInt(9);
+				}
+				System.out.println(setrand);
+				y = random.nextInt(setrand);
 			}
 			System.out.println("A Tar lake has been spawned at:" + bpos);
 			generator.generate(world, random, bpos);
@@ -52,13 +77,13 @@ public class BaVTarLake implements IWorldGenerator {
 		
 	}
 	
-	private static int calculateGenerationHeight(World world, int x, int z, Block topBlock) {
+	private static int calculateGroundHeight(World world, int x, int z) {
 		int y = world.getHeight();
 		boolean foundGround = false;
-		
 		while(!foundGround && y >= 0) {
 			Block block = world.getBlockState(new BlockPos(x,y,z)).getBlock(); 
-			foundGround = block == topBlock;
+			Material material = block.getMaterial(block.getDefaultState());
+			foundGround = material == Material.GROUND;
 			y--;
 		}
 		return y;

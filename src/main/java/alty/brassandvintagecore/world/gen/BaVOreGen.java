@@ -27,9 +27,11 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class BaVOreGen implements IWorldGenerator {
 	private WorldGenerator ore_vanadinite;
+	private WorldGenerator ore_zinc;
 	//Define Ores
 	public BaVOreGen() {
 		ore_vanadinite = new WorldGenMinable(BaVBlocks.VANADINITE_ORE.getDefaultState(), 50, BlockMatcher.forBlock(Blocks.STONE));
+		ore_zinc =  new WorldGenMinable(BaVBlocks.ZINC_ORE.getDefaultState(), 5, BlockMatcher.forBlock(Blocks.STONE));
 	}
 	//Define Sample Bits for Special Ores
 	public Block bit_vanadinite = BaVBlocks.VANADINITE_BIT;
@@ -122,6 +124,8 @@ public class BaVOreGen implements IWorldGenerator {
 			runGeneratorSpecial(ore_vanadinite, world, random, chunkX, chunkZ, 1, 2, 15, bit_vanadinite, bit_vanadinite_sea);
 		}
 		
+		runGenerator(ore_zinc, world, random, chunkX, chunkZ, 5, 5, 128);
+		
 		
 	}
 	public static int oreY;
@@ -132,10 +136,10 @@ public class BaVOreGen implements IWorldGenerator {
 			int j = 0;
 			while(j <= bitCount) {
 				world.setBlockState(bitPos, bitBlock.getDefaultState());
-				System.out.println("A vanadinite land bit has been spawned at "+bitPos);
+				//System.out.println("A vanadinite land bit has been spawned at "+bitPos);
 				BlockPos bitPosSea = getSamplePos(world, chunkX, chunkZ, oreY, rand, true);
 				world.setBlockState(bitPosSea, bitBlockSea.getDefaultState());
-				System.out.println("A vanadinite sea bit has been spawned at "+bitPos);
+				//System.out.println("A vanadinite sea bit has been spawned at "+bitPos);
 				j++;
 			}
 		}
@@ -149,11 +153,24 @@ public class BaVOreGen implements IWorldGenerator {
 			int x = chunkX * 16 + rand.nextInt(4);
 			int z = chunkZ * 16 + rand.nextInt(4);
 			oreY = minHeight + rand.nextInt(16);
-			BlockPos veinPos = new BlockPos(x, oreY, z);
-			System.out.println("A vanadinite vein has been spawned at " + veinPos);
+			//BlockPos veinPos = new BlockPos(x, oreY, z);
+			//System.out.println("A vanadinite vein has been spawned at " + veinPos);
 			
 			runGeneratorBit(bitBlock, bitBlockSea, world, rand, chunkX, chunkZ);
 			gen.generate(world, rand, new BlockPos(x, oreY, z));
+		}
+	}
+	
+	private void runGenerator(WorldGenerator gen, World world, Random rand, int chunkX, int chunkZ, int chance, int minHeight, int maxHeight) {
+		if(minHeight > maxHeight || maxHeight > 256) throw new IllegalArgumentException("A BaV Ore was generated out of bounds!");
+		int i = 0;
+		
+		while(i <= rand.nextInt(chance)) {
+			int x = chunkX * 16 + rand.nextInt(16);
+			int z = chunkZ * 16 + rand.nextInt(16);
+			int y = minHeight + rand.nextInt(maxHeight);
+			gen.generate(world, rand, new BlockPos(x, y, z));
+			i++;
 		}
 	}
 }
