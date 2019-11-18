@@ -45,7 +45,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /*
- * This is a modified version of 1.14 immmersive engineering code, all credits goes to them
+ * This is a modified version of 1.14 immersive engineering code, all credits goes to them
  * 
  * A special thanks to malte0811, who was patient enough to explain things to me(Alty)
  * 
@@ -118,10 +118,10 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 
 	//TODO make all of these non-final (currently final to make porting easier)
 
-	@Override
-	public final ResourceLocation getUniqueName()
+	
+	public final ResourceLocation getMultiblockLocation()
 	{
-		return loc;
+		return loc = new ResourceLocation("brassandvintagecore:mutliblocks/"+getUniqueName());
 	}
 
 	@Override
@@ -328,5 +328,5 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 		Template template = new Template();
 		template.read(compoundnbt);
 		return template;
-}
+	}
 }
