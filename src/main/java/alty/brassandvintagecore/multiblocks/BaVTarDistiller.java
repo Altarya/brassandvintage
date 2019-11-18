@@ -1,5 +1,7 @@
 package alty.brassandvintagecore.multiblocks;
 
+import blusunrize.immersiveengineering.api.Lib;
+import blusunrize.immersiveengineering.api.MultiblockHandler;
 import blusunrize.immersiveengineering.api.MultiblockHandler.IMultiblock;
 import blusunrize.immersiveengineering.api.crafting.IngredientStack;
 import blusunrize.immersiveengineering.common.IEContent;
@@ -10,6 +12,7 @@ import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecor
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecoration2;
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDevice1;
 import blusunrize.immersiveengineering.common.blocks.stone.BlockTypes_StoneDecoration;
+import blusunrize.immersiveengineering.common.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -98,8 +101,95 @@ public class BaVTarDistiller implements IMultiblock{
 
 	@Override
 	public boolean createStructure(World world, BlockPos pos, EnumFacing side, EntityPlayer player) {
-		// TODO Auto-generated method stub
-		return false;
+		side = side.getOpposite();
+		if(side==EnumFacing.UP||side==EnumFacing.DOWN)
+			side = EnumFacing.fromAngle(player.rotationYaw);
+
+		boolean mirror = false;
+		boolean b = this.structureCheck(world, pos, side, mirror);
+		if(!b)
+		{
+			mirror = true;
+			b = structureCheck(world, pos, side, mirror);
+		}
+		if(!b) {
+			System.out.println("Multiblock check failed: Structure check failed!");
+			return false;
+		}
+		ItemStack hammer = player.getHeldItemMainhand().getItem().getToolClasses(player.getHeldItemMainhand()).contains(Lib.TOOL_HAMMER)?player.getHeldItemMainhand(): player.getHeldItemOffhand();
+		if(MultiblockHandler.fireMultiblockFormationEventPost(player, this, pos, hammer).isCanceled())
+			System.out.println("Multiblock check failed: Wrong item!");
+			return false;
+	}
+	
+	boolean structureCheck(World world, BlockPos startPos, EnumFacing dir, boolean mirror)
+	{
+		for(int h = -1; h <= 1; h++)
+			for(int l = 0; l <= 2; l++)
+				for(int w = -2; w <= 2; w++)
+				{
+					if((h==0&&l==0&&w!=0&&w!=2)||(h==0&&l==0&&w==0)||(h==1&&(l==0||w==0)))
+						continue;
+
+					int ww = mirror?-w: w;
+					BlockPos pos = startPos.offset(dir, l).offset(dir.rotateY(), ww).add(0, h, 0);
+
+					if(h==-1)
+					{
+						if(l==1)
+						{
+							if(!Utils.isBlockAt(world, pos, IEContent.blockMetalDevice1, BlockTypes_MetalDevice1.FLUID_PIPE.getMeta()))
+								return false;
+						}
+						else if(l==0&&w==0)
+						{
+							if(!Utils.isBlockAt(world, pos, IEContent.blockMetalDecoration0, BlockTypes_MetalDecoration0.HEAVY_ENGINEERING.getMeta()))
+								return false;
+						}
+						else if(l==2&&w==0)
+						{
+							if(!Utils.isBlockAt(world, pos, IEContent.blockMetalDecoration0, BlockTypes_MetalDecoration0.LIGHT_ENGINEERING.getMeta()))
+								return false;
+						}
+						else
+						{
+							if(!Utils.isOreBlockAt(world, pos, "scaffoldingSteel"))
+								return false;
+						}
+					}
+					else if(h==0)
+					{
+						if(l==0&&w==0)
+						{
+							if(!Utils.isBlockAt(world, pos, IEContent.blockMetalDecoration0, BlockTypes_MetalDecoration0.HEAVY_ENGINEERING.getMeta()))
+								return false;
+						}
+						if(l==2&&w==0)
+						{
+							if(!Utils.isBlockAt(world, pos, IEContent.blockMetalDecoration0, BlockTypes_MetalDecoration0.LIGHT_ENGINEERING.getMeta()))
+								return false;
+						}
+						else if(l==0&&w==2)
+						{
+							if(!Utils.isBlockAt(world, pos, IEContent.blockMetalDecoration0, BlockTypes_MetalDecoration0.RS_ENGINEERING.getMeta()))
+								return false;
+						}
+						else if(l > 0&&w!=0)
+						{
+							if(!Utils.isOreBlockAt(world, pos, "blockSheetmetalIron"))
+								return false;
+						}
+					}
+					else if(h==1)
+					{
+						if(l > 0&&w!=0)
+						{
+							if(!Utils.isOreBlockAt(world, pos, "blockSheetmetalIron"))
+								return false;
+						}
+					}
+				}
+		return true;
 	}
 
 	@Override
