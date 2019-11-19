@@ -9,9 +9,14 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
+import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.objects.IStructure;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,9 +31,12 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
+import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraft.world.gen.structure.template.Template.BlockInfo;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
@@ -56,12 +64,14 @@ import java.util.Optional;
 //TODO rotaion of blocks?
 public abstract class MultiblockTemplateManager implements IMultiblock
 {
-	private ResourceLocation loc;
+	MinecraftServer mcServer = IStructure.worldServer.getMinecraftServer();
+	TemplateManager manager = IStructure.worldServer.getStructureTemplateManager();
+	private ResourceLocation loc = new ResourceLocation(BavInitialization.MODID, "brassandvintagecore:mutliblocks/"+getUniqueName());;
 	private BlockPos masterFromOrigin;
 	public BlockPos triggerFromOrigin;
 	private Map<Block, OreDictionary> tags;
 	@Nullable
-	private Template template;
+	private Template template = manager.get(mcServer, loc);
 	
 	
 	@Nullable
@@ -118,64 +128,108 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 		return template;
 	}
 
-	//TODO make all of these non-final (currently final to make porting easier)
-
 	
-	public final ResourceLocation getMultiblockLocation()
+	public ResourceLocation getMultiblockLocation()
 	{
 		return loc = new ResourceLocation("brassandvintagecore:mutliblocks/"+getUniqueName());
 	}
 
 	@Override
-	public final boolean isBlockTrigger(IBlockState state)
+	public boolean isBlockTrigger(IBlockState state)
 	{
 		getTemplate();
 		//TODO facing dependant
 		return state.getBlock()==trigger.getBlock();
 	}
+	
+	
+	public static Rotation getRotationBetweenFacings(EnumFacing orig, EnumFacing to)
+    {
+        if(to==orig)
+            return Rotation.NONE;
+        if(orig.getAxis()==Axis.Y||to.getAxis()==Axis.Y)
+            return null;
+        orig = orig.rotateY();
+        if(orig==to)
+            return Rotation.CLOCKWISE_90;
+        orig = orig.rotateY();
+        if(orig==to)
+            return Rotation.CLOCKWISE_180;
+        orig = orig.rotateY();
+        if(orig==to)
+            return Rotation.COUNTERCLOCKWISE_90;
+        return null;//This shouldn't ever happen
+    }
 
-
+	public boolean isIn(IBlockState block1, IBlockState block2) {
+		ItemStack item1 = new ItemStack(block1.getBlock(), 1, block1.getBlock().getMetaFromState(block1));
+		ItemStack item2 = new ItemStack(block2.getBlock(), 1, block2.getBlock().getMetaFromState(block1));
+		if(OreDictionary.itemMatches(item2, item1, true)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	@Override
-	public final boolean createStructure(World world, BlockPos pos, EnumFacing side, PlayerEntity player)
+	public boolean createStructure(World world, BlockPos pos, EnumFacing side, EntityPlayer player)
 	{
 		List<Template.BlockInfo> blocks;
-		Field blocksField = template.getClass().getDeclaredField("blocks");
-		blocksField.setAccessible(true);
-		blocks = (List<BlockInfo>) blocksField.get(template);
-		if(side.getAxis()==Axis.Y)
-			side = EnumFacing.fromAngle(player.rotationYaw);
-		Rotation rot = Utils.getRotationBetweenFacings(EnumFacing.NORTH, side.getOpposite());
-		if(rot==null)
-			return false;
-		Template template = getTemplate();
-		List<Mirror> mirrorStates;
-		if(canBeMirrored())
-			mirrorStates = ImmutableList.of(Mirror.NONE, Mirror.FRONT_BACK);
-		else
-			mirrorStates = ImmutableList.of(Mirror.NONE);
-		mirrorLoop:
-		for(Mirror mirror : mirrorStates)
-		{
-			PlacementSettings placeSet = new PlacementSettings().setMirror(mirror).setRotation(rot);
-			BlockPos origin = pos.subtract(Template.transformedBlockPos(placeSet, triggerFromOrigin));
-			for(Template.BlockInfo info : blocks)
+		Field blocksField;
+		try {
+			blocksField = template.getClass().getDeclaredField("blocks");
+			blocksField.setAccessible(true);
+			blocks = (List<BlockInfo>) blocksField.get(template);
+			
+			if(side.getAxis()==Axis.Y)
+				side = EnumFacing.fromAngle(player.rotationYaw);
+			Rotation rot = getRotationBetweenFacings(EnumFacing.NORTH, side.getOpposite());
+			if(rot==null)
+				return false;
+			Template template = getTemplate();
+			List<Mirror> mirrorStates;
+			if(canBeMirrored())
+				mirrorStates = ImmutableList.of(Mirror.NONE, Mirror.FRONT_BACK);
+			else
+				mirrorStates = ImmutableList.of(Mirror.NONE);
+			mirrorLoop:
+			for(Mirror mirror : mirrorStates)
 			{
-				BlockPos realRelPos = Template.transformedBlockPos(placeSet, info.pos);
-				BlockPos here = origin.add(realRelPos);
+				PlacementSettings placeSet = new PlacementSettings().setMirror(mirror).setRotation(rot);
+				BlockPos origin = pos.subtract(Template.transformedBlockPos(placeSet, triggerFromOrigin));
+				for(Template.BlockInfo info : blocks)
+				{
+					BlockPos realRelPos = Template.transformedBlockPos(placeSet, info.pos);
+					BlockPos here = origin.add(realRelPos);
 
-				IBlockState expected = info.blockState.withMirror(mirror.toRotation(rot.rotate(p_185833_1_, p_185833_2_));
+					IBlockState expected = info.blockState.withMirror(mirror).withRotation(rot);
 
-				IBlockState inWorld = world.getBlockState(here);
-				boolean valid;
-				if(tags.containsKey(expected.getBlock()))
-					valid = inWorld.getBlock().isIn(tags.get(expected.getBlock()));
-				else
-					valid = inWorld==expected;
-				if(!valid)
-					continue mirrorLoop;
+					IBlockState inWorld = world.getBlockState(here);
+					boolean valid;
+					List<String> taglist = new ArrayList<String>(); 
+					taglist.add(tags.toString());
+					int size = taglist.size();
+					ItemStack expectedStack = new ItemStack(expected.getBlock(), 1, expected.getBlock().getMetaFromState(expected));
+					for(int r = 0; r<=size; r++) {
+						if(Utils.compareToOreName(expectedStack, taglist.get(r)))
+							valid = isIn(inWorld, expected);
+						else
+							valid = inWorld==expected;
+						if(!valid)
+							continue mirrorLoop;
+					}
+				}
+				form(world, origin, rot, mirror, side);
+				return true;
 			}
-			form(world, origin, rot, mirror, side);
-			return true;
+			return false;
+		} catch (NoSuchFieldException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -230,7 +284,7 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 
 	public static BlockPos withSettingsAndOffset(BlockPos origin, BlockPos relative, boolean mirrored, EnumFacing facing)
 	{
-		Rotation rot = Utils.getRotationBetweenFacings(EnumFacing.NORTH, facing);
+		Rotation rot = getRotationBetweenFacings(EnumFacing.NORTH, facing);
 		if(rot==null)
 			return origin;
 		return withSettingsAndOffset(origin, relative, mirrored?Mirror.FRONT_BACK: Mirror.NONE,
@@ -240,13 +294,13 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 	public void disassemble(World world, BlockPos origin, boolean mirrored, EnumFacing clickDirectionAtCreation)
 	{
 		Mirror mirror = mirrored?Mirror.FRONT_BACK: Mirror.NONE;
-		Rotation rot = Utils.getRotationBetweenFacings(EnumFacing.NORTH, clickDirectionAtCreation);
+		Rotation rot = getRotationBetweenFacings(EnumFacing.NORTH, clickDirectionAtCreation);
 		Preconditions.checkNotNull(rot);
 		for(BlockInfo block : getStructure())
 		{
 			BlockPos actualPos = withSettingsAndOffset(origin, block.pos, mirror, rot);
 			prepareBlockForDisassembly(world, actualPos);
-			world.setBlockState(actualPos, block.blockState.withMirror(mirror).rotate(rot));
+			world.setBlockState(actualPos, block.blockState.withMirror(mirror).withRotation(rot));
 		}
 	}
 
@@ -264,35 +318,14 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 		return true;
 	}
 
-	public static Optional<InputStream> getModResource(ResourceLocation name)
-	{
-		return ModList.get().getMods().stream()
-				.map(ModInfo::getModId)
-				.map(ResourcePackLoader::getResourcePackFor)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.filter(mfrp -> mfrp.resourceExists(type, name))
-				.map(mfrp -> getInputStreamOrThrow(type, name, mfrp))
-				.findAny();
-	}
-
-	private static InputStream getInputStreamOrThrow(ResourceLocation name, ModFileResourcePack source)
-	{
-		try
-		{
-			return source.getResourceStream(name);
-		} catch(IOException e)
-		{
-			throw new RuntimeException(e);
-		}
-}
 	
-	public static Template loadStaticTemplate(ResourceLocation loc) throws IOException
+	public static Template loadStaticTemplate(String Multiblock)
 	{
-		Optional<InputStream> optStream = new ResourceLocation(loc.getResourceDomain(), loc.getResourcePath()+".nbt"));
-		if(!optStream.isPresent())
-			throw new RuntimeException("Mod resource not found: "+loc);
-		return loadTemplate(optStream.get());
+		if(template == null) {
+			//TODO Add missing message
+		}
+		else
+			return template;
 	}
 
 	public static Template loadTemplate(InputStream inputStreamIn) throws IOException
