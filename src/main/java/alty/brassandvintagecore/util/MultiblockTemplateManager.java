@@ -1,56 +1,42 @@
 package alty.brassandvintagecore.util;
 
-import blusunrize.immersiveengineering.ImmersiveEngineering;
+import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.objects.IStructure;
 import blusunrize.immersiveengineering.api.MultiblockHandler.IMultiblock;
 import blusunrize.immersiveengineering.api.crafting.IngredientStack;
 import blusunrize.immersiveengineering.common.util.Utils;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-
-import alty.brassandvintagecore.init.BavInitialization;
-import alty.brassandvintagecore.objects.IStructure;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.Mirror;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
-import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.minecraft.world.gen.structure.template.Template.BlockInfo;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.world.gen.structure.template.TemplateManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.apache.commons.compress.archivers.dump.DumpArchiveEntry.TYPE;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /*
  * This is a modified version of 1.14 immersive engineering code, all credits goes to them
@@ -62,32 +48,30 @@ import java.util.Optional;
  * */
 
 //TODO rotaion of blocks?
+@Slf4j
 public abstract class MultiblockTemplateManager implements IMultiblock
 {
-	MinecraftServer mcServer = IStructure.worldServer.getMinecraftServer();
-	TemplateManager manager = IStructure.worldServer.getStructureTemplateManager();
-	private ResourceLocation loc = new ResourceLocation(BavInitialization.MODID, "brassandvintagecore:mutliblocks/"+getUniqueName());;
+	private MinecraftServer mcServer = IStructure.worldServer.getMinecraftServer();
+	private TemplateManager manager = IStructure.worldServer.getStructureTemplateManager();
+	private ResourceLocation loc;
 	private BlockPos masterFromOrigin;
 	public BlockPos triggerFromOrigin;
 	private Map<Block, OreDictionary> tags;
 	@Nullable
 	private Template template = manager.get(mcServer, loc);
-	
-	
+
 	@Nullable
 	private IngredientStack[] materials;
 	private IBlockState trigger = Blocks.AIR.getDefaultState();
 
-	public MultiblockTemplateManager(ResourceLocation loc, BlockPos masterFromOrigin, BlockPos triggerFromOrigin, ImmutableMap<Object, Object> of)
+	public MultiblockTemplateManager(String loc, BlockPos masterFromOrigin, BlockPos triggerFromOrigin)
 	{
 		this(loc, masterFromOrigin, triggerFromOrigin, ImmutableMap.of());
 	}
 
-	
-
-	public void TemplateMultiblock(ResourceLocation loc, BlockPos masterFromOrigin, BlockPos triggerFromOrigin, Map<Block, OreDictionary> tags)
+	public MultiblockTemplateManager(String loc, BlockPos masterFromOrigin, BlockPos triggerFromOrigin, Map<Block, OreDictionary> tags)
 	{
-		this.loc = loc;
+		this.loc = new ResourceLocation(BavInitialization.MODID, "multiblocks/"+loc);
 		this.masterFromOrigin = masterFromOrigin;
 		this.triggerFromOrigin = triggerFromOrigin;
 		this.tags = tags;
@@ -100,7 +84,6 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 		{
 			try
 			{
-				template = loadStaticTemplate(loc);
 				List<Template.BlockInfo> blocks;
 				Field blocksField = template.getClass().getDeclaredField("blocks");
 				blocksField.setAccessible(true);
@@ -117,11 +100,7 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 					}
 				}
 				materials = null;
-			} 
-			catch(IOException e){
-				throw new RuntimeException(e);
-			}
-			catch (NoSuchFieldException | IllegalAccessException e) {
+			} catch (NoSuchFieldException | IllegalAccessException e) {
 			       e.printStackTrace();
 			}
 		}
@@ -225,11 +204,9 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 			}
 			return false;
 		} catch (NoSuchFieldException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getLocalizedMessage());
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getLocalizedMessage());
 		}
 		return false;
 	}
@@ -255,12 +232,9 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 			blocksField = getTemplate().getClass().getDeclaredField("blocks");
 			blocksField.setAccessible(true);
 			blocks = (List<BlockInfo>) blocksField.get(template);
-		} catch (NoSuchFieldException | IllegalAccessException e) {
-			//TODO not annoy SkySom and replace all with proper Loggers
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}		
+		} catch (NoSuchFieldException | IllegalAccessException | SecurityException e) {
+			log.error(e.getLocalizedMessage());
+		}
 		return blocks;
 	}
 
@@ -270,8 +244,8 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean overwriteBlockRender(IBlockState state, int iterator)
+	@SideOnly(Side.CLIENT)
+	public boolean overwriteBlockRender(ItemStack state, int iterator)
 	{
 		return false;
 	}
@@ -316,23 +290,5 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 	public boolean canBeMirrored()
 	{
 		return true;
-	}
-
-	
-	public static Template loadStaticTemplate(String Multiblock)
-	{
-		if(template == null) {
-			//TODO Add missing message
-		}
-		else
-			return template;
-	}
-
-	public static Template loadTemplate(InputStream inputStreamIn) throws IOException
-	{
-		NBTTagCompound compoundnbt = CompressedStreamTools.readCompressed(inputStreamIn);
-		Template template = new Template();
-		template.read(compoundnbt);
-		return template;
 	}
 }
