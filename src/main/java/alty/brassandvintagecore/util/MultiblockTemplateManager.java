@@ -47,7 +47,9 @@ import java.util.Optional;
 /*
  * This is a modified version of 1.14 immersive engineering code, all credits goes to them
  * 
- * A special thanks to malte0811, who was patient enough to explain things to me(Alty)
+ * A special thanks to malte0811 and SkySom, who were patient enough to explain things to me(Alty)
+ * 
+ * https://github.com/BluSunrize/ImmersiveEngineering/blob/1.14/src/main/java/blusunrize/immersiveengineering/api/multiblocks/TemplateMultiblock.java
  * 
  * */
 
@@ -200,6 +202,7 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 			blocksField.setAccessible(true);
 			blocks = (List<BlockInfo>) blocksField.get(template);
 		} catch (NoSuchFieldException | IllegalAccessException e) {
+			//TODO not annoy SkySom and replace all with proper Loggers
 			e.printStackTrace();
 		} catch (SecurityException e) {
 			e.printStackTrace();
@@ -234,36 +237,6 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 				rot);
 	}
 
-	@Override
-	public final IngredientStack[] getTotalMaterials()
-	{
-		if(materials==null)
-		{
-			List<BlockInfo> structure = getStructure();
-			List<IngredientStack> ret = new ArrayList<>(structure.size());
-			RayTraceResult rtr = new RayTraceResult(Vec3d.ZERO, EnumFacing.DOWN, BlockPos.ORIGIN);
-			for(BlockInfo info : structure)
-			{
-				BlockPos pickblock = rtr.getBlockPos();
-				World world;
-				IBlockState pickblocko = world.getBlockState(pickblock);
-				NonNullList<ItemStack> picked = Utils.getDrops(pickblocko);
-				boolean added = false;
-				for(IngredientStack existing : ret)
-					if(existing.matches(picked))
-					{
-						++existing.inputSize;
-						added = true;
-						break;
-					}
-				if(!added)
-					ret.add(new IngredientStack(picked));
-			}
-			materials = ret.toArray(new IngredientStack[0]);
-		}
-		return materials;
-	}
-
 	public void disassemble(World world, BlockPos origin, boolean mirrored, EnumFacing clickDirectionAtCreation)
 	{
 		Mirror mirror = mirrored?Mirror.FRONT_BACK: Mirror.NONE;
@@ -290,7 +263,8 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 	{
 		return true;
 	}
-	public static Optional<InputStream> getModResource(ResourcePackType type, ResourceLocation name)
+
+	public static Optional<InputStream> getModResource(ResourceLocation name)
 	{
 		return ModList.get().getMods().stream()
 				.map(ModInfo::getModId)
@@ -302,21 +276,20 @@ public abstract class MultiblockTemplateManager implements IMultiblock
 				.findAny();
 	}
 
-	private static InputStream getInputStreamOrThrow(ResourcePackType type, ResourceLocation name, ModFileResourcePack source)
+	private static InputStream getInputStreamOrThrow(ResourceLocation name, ModFileResourcePack source)
 	{
 		try
 		{
-			return source.getResourceStream(type, name);
+			return source.getResourceStream(name);
 		} catch(IOException e)
 		{
 			throw new RuntimeException(e);
 		}
-	}
-
+}
+	
 	public static Template loadStaticTemplate(ResourceLocation loc) throws IOException
 	{
-		Optional<InputStream> optStream = getModResource(ResourcePackType.SERVER_DATA,
-				new ResourceLocation(loc.getNamespace(), loc.getPath()+".nbt"));
+		Optional<InputStream> optStream = new ResourceLocation(loc.getResourceDomain(), loc.getResourcePath()+".nbt"));
 		if(!optStream.isPresent())
 			throw new RuntimeException("Mod resource not found: "+loc);
 		return loadTemplate(optStream.get());
