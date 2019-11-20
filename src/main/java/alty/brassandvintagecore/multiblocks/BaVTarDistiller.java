@@ -1,18 +1,18 @@
 package alty.brassandvintagecore.multiblocks;
 
+import alty.brassandvintagecore.util.MultiblockTemplateManager;
 import blusunrize.immersiveengineering.api.Lib;
 import blusunrize.immersiveengineering.api.MultiblockHandler;
-import blusunrize.immersiveengineering.api.MultiblockHandler.IMultiblock;
 import blusunrize.immersiveengineering.api.crafting.IngredientStack;
 import blusunrize.immersiveengineering.common.IEContent;
 import blusunrize.immersiveengineering.common.blocks.BlockTypes_MetalsAll;
-import blusunrize.immersiveengineering.common.blocks.BlockTypes_MetalsIE;
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecoration0;
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecoration1;
-import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecoration2;
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDevice1;
-import blusunrize.immersiveengineering.common.blocks.stone.BlockTypes_StoneDecoration;
 import blusunrize.immersiveengineering.common.util.Utils;
+import com.google.common.collect.ImmutableMap;
+import lombok.extern.slf4j.Slf4j;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -20,11 +20,22 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.structure.template.Template;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class BaVTarDistiller implements IMultiblock{
+import java.util.Map;
+
+@Slf4j
+public class BaVTarDistiller extends MultiblockTemplateManager {
 	
-	public static BaVTarDistiller instance = new BaVTarDistiller();
+	public static BaVTarDistiller instance = new BaVTarDistiller(
+			"tar_distiller",
+			new BlockPos(0, 0, 0),
+			new BlockPos(0, 0, 0),
+			ImmutableMap.of()
+	);
 	
 	static ItemStack[][][] structure = new ItemStack[11][4][7];
 
@@ -88,6 +99,10 @@ public class BaVTarDistiller implements IMultiblock{
 				}
 	}
 
+	public BaVTarDistiller(String loc, BlockPos masterFromOrigin, BlockPos triggerFromOrigin, Map<Block, OreDictionary> tags) {
+		super(loc, masterFromOrigin, triggerFromOrigin, tags);
+	}
+
 
 	@Override
 	public String getUniqueName() {
@@ -121,7 +136,12 @@ public class BaVTarDistiller implements IMultiblock{
 			System.out.println("Multiblock check failed: Wrong item!");
 			return false;
 	}
-	
+
+	@Override
+	protected void replaceStructureBlock(Template.BlockInfo info, World world, BlockPos actualPos, boolean mirrored, EnumFacing clickDirection, Vec3i offsetFromMaster) {
+		log.info("Nothing to replace with for now");
+	}
+
 	boolean structureCheck(World world, BlockPos startPos, EnumFacing dir, boolean mirror)
 	{
 		for(int h = -1; h <= 1; h++)
