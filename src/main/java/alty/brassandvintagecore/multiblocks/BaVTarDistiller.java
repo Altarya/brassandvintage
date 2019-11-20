@@ -103,7 +103,6 @@ public class BaVTarDistiller extends MultiblockTemplateManager {
 		super(loc, masterFromOrigin, triggerFromOrigin, tags);
 	}
 
-
 	@Override
 	public String getUniqueName() {
 		return "BaV:TarDistiller";

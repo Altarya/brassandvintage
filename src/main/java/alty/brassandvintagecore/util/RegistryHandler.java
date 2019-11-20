@@ -44,11 +44,11 @@ public class RegistryHandler {
         }
 	}
 	
-	public static void BaVMutliblockRegistries() {
+	public static void registerBaVMultiblocks() {
 		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
 	}
 	
-	public static void otherBaVRegistries() {
+	public static void registerBaVCommon() {
 		
 		BaVFluids.registerFluids();
 		

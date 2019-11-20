@@ -1,15 +1,15 @@
 package alty.brassandvintagecore.init;
 
+import alty.brassandvintagecore.proxy.CommonProxy;
+import alty.brassandvintagecore.util.RegistryHandler;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-import net.minecraftforge.fml.common.SidedProxy;
-import alty.brassandvintagecore.proxy.CommonProxy;
-import alty.brassandvintagecore.util.RegistryHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = BavInitialization.MODID, name = BavInitialization.NAME, version = BavInitialization.VERSION)
 public class BavInitialization
@@ -31,18 +31,18 @@ public class BavInitialization
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        RegistryHandler.otherBaVRegistries();
-    }
-
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-    	RegistryHandler.BaVMutliblockRegistries();
+        RegistryHandler.registerBaVCommon();
     }
     
     @EventHandler
 	public void postInit(FMLPostInitializationEvent event){
 		proxy.postInitEnd(event);
+    }
+
+    @SubscribeEvent
+    public void onLoad(WorldEvent.Load event)
+    {
+        RegistryHandler.registerBaVMultiblocks();
     }
     
 }
