@@ -14,7 +14,7 @@ public class BaVIntroduction {
 	IManualPage[] PAGE = new IManualPage[]{
 				new ManualPages.ItemDisplay(man, BavInitialization.MODID+".introduction.p0", new ItemStack(ItemVehicle.getByNameOrId("brassandvintage:modelt_black"), 1, 0)),
 				new ManualPages.Image(man, BavInitialization.MODID+".introduction.p1", "brassandvintagecore:textures/manual/ore_zinc.png"),
-				//new ManualPageMultiblock(man, BavInitialization.MODID+".introduction.p2", BaVTarDistiller.instance),
+				new ManualPageMultiblock(man, BavInitialization.MODID+".introduction.p2", BaVTarDistiller.instance),
 		};
 	man.addEntry(BavInitialization.MODID+".introduction", BavInitialization.MODID, PAGE);
 	}

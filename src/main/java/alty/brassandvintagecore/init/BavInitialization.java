@@ -36,13 +36,14 @@ public class BavInitialization
     
     @EventHandler
 	public void postInit(FMLPostInitializationEvent event){
+    	RegistryHandler.registerBaVMultiblocks();
 		proxy.postInitEnd(event);
     }
 
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event)
     {
-        RegistryHandler.registerBaVMultiblocks();
+        
     }
     
 }

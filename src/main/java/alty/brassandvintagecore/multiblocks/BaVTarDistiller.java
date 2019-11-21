@@ -3,6 +3,7 @@ package alty.brassandvintagecore.multiblocks;
 import alty.brassandvintagecore.util.MultiblockTemplateManager;
 import blusunrize.immersiveengineering.api.Lib;
 import blusunrize.immersiveengineering.api.MultiblockHandler;
+import blusunrize.immersiveengineering.api.MultiblockHandler.IMultiblock;
 import blusunrize.immersiveengineering.api.crafting.IngredientStack;
 import blusunrize.immersiveengineering.common.IEContent;
 import blusunrize.immersiveengineering.common.blocks.BlockTypes_MetalsAll;
@@ -28,14 +29,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.Map;
 
 @Slf4j
-public class BaVTarDistiller extends MultiblockTemplateManager {
+public class BaVTarDistiller implements IMultiblock {
 	
-	public static BaVTarDistiller instance = new BaVTarDistiller(
-			"tar_distiller",
-			new BlockPos(0, 0, 0),
-			new BlockPos(0, 0, 0),
-			ImmutableMap.of()
-	);
+	public static BaVTarDistiller instance = new BaVTarDistiller();
 	
 	static ItemStack[][][] structure = new ItemStack[11][4][7];
 
@@ -99,9 +95,7 @@ public class BaVTarDistiller extends MultiblockTemplateManager {
 				}
 	}
 
-	public BaVTarDistiller(String loc, BlockPos masterFromOrigin, BlockPos triggerFromOrigin, Map<Block, OreDictionary> tags) {
-		super(loc, masterFromOrigin, triggerFromOrigin, tags);
-	}
+	
 
 	@Override
 	public String getUniqueName() {
@@ -136,10 +130,7 @@ public class BaVTarDistiller extends MultiblockTemplateManager {
 			return false;
 	}
 
-	@Override
-	protected void replaceStructureBlock(Template.BlockInfo info, World world, BlockPos actualPos, boolean mirrored, EnumFacing clickDirection, Vec3i offsetFromMaster) {
-		log.info("Nothing to replace with for now");
-	}
+	
 
 	boolean structureCheck(World world, BlockPos startPos, EnumFacing dir, boolean mirror)
 	{
