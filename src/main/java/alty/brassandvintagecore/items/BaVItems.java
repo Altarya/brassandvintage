@@ -19,5 +19,6 @@ public class BaVItems {
 	public static final Item ZINC_INGOT = new BaVItemBase("ingot_zinc");
 	//Crafting Components
 	//Tools and Armor
+	public static final Item HAND_SCREWGUN = new HandScrewgun();
 	//Misc
 }
