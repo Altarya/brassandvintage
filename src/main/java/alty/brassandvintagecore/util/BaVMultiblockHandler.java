@@ -1,6 +1,7 @@
 package alty.brassandvintagecore.util;
 
 import alty.brassandvintagecore.multiblocks.common.MultiblockComponent;
+import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.util.MiscUtils.Chatter;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.block.state.IBlockState;
@@ -33,6 +34,7 @@ public abstract class BaVMultiblockHandler {
 	private final MultiblockComponent[][][] components;
 	private final String name;
 	protected final List<BlockPos> componentPositions;
+	protected final ArrayList<BlockPos> componentMirror;
 	
 	protected static final MultiblockComponent AIR = new MultiblockComponent();
 	protected static final MultiblockComponent STEEL() {
@@ -76,10 +78,18 @@ public abstract class BaVMultiblockHandler {
 				}
 			}
 		}
-}
+		componentMirror = new ArrayList<BlockPos>();
+		for (int z = components.length-1; z >= 0; z--) {
+			MultiblockComponent[][] zcomp = components[z];
+			for (int y = components[z].length-1; y >= 0; y--) {
+				MultiblockComponent[] ycomp = zcomp[y];
+				for (int x = ycomp.length-1; x >= 0; x--) {
+					componentMirror.add(new BlockPos(x, y, z));
+				}
+			}
+		}
+	}
 	protected MultiblockComponent lookup(BlockPos offset) {
-		System.out.println("X: "+offset.getX()+" Y: "+offset.getY()+" Z: "+offset.getZ());
-		System.out.println(components[offset.getZ()][offset.getY()][offset.getX()]);
 		return components[offset.getZ()][offset.getY()][offset.getX()];
 	}
 	
@@ -91,6 +101,7 @@ public abstract class BaVMultiblockHandler {
 	}
 	
 	public boolean tryCreate(World world, BlockPos pos) {
+		//Normal
 		for (BlockPos activationLocation : this.componentPositions) {
 			for (Rotation rot : Rotation.values()) {
 				BlockPos origin = pos.subtract(activationLocation.rotate(rot));
@@ -107,7 +118,23 @@ public abstract class BaVMultiblockHandler {
 				}
 			}
 		}
-		System.out.println(components);
+		//Mirror
+		for (BlockPos activationLocation : this.componentMirror) {
+			for (Rotation rot : Rotation.values()) {
+				BlockPos origin = pos.subtract(activationLocation.rotate(rot));
+				boolean valid = true;
+				for (BlockPos offset : this.componentMirror) {
+					valid = valid && checkValid(world, origin, offset, rot);
+				}
+				if (valid) {
+					if (!world.isRemote) {
+						instance(world, origin, rot).onCreate();
+					}
+					System.out.println("tried to create, created, mirror");
+					return true;
+				}
+			}
+		}
 		System.out.println("tried to create, but failed");
 		return false;
 	}
@@ -186,11 +213,11 @@ public abstract class BaVMultiblockHandler {
 				
 				BlockPos pos = getPos(offset);
 				IBlockState origState = world.getBlockState(pos);
-				/*
-				world.setBlockState(pos, IRBlocks.BLOCK_MULTIBLOCK.getDefaultState());
-				TileMultiblock te = TileMultiblock.get(world, pos);
 				
-				te.configure(name, rot, offset, origState);*/
+				//world.setBlockState(pos, IRBlocks.BLOCK_MULTIBLOCK.getDefaultState());
+				//TileMultiblock te = TileMultiblock.get(world, pos);
+				
+				//te.configure(name, rot, offset, origState);
 			}
 		}
 		public abstract boolean onBlockActivated(EntityPlayer player, EnumHand hand, BlockPos offset);
@@ -208,12 +235,12 @@ public abstract class BaVMultiblockHandler {
 					continue;
 				}
 				BlockPos pos = getPos(offset);
-				/*TileMultiblock te = TileMultiblock.get(world, pos);
-				if (te == null) {
-					world.destroyBlock(pos, true);
-					continue;
-				}
-				te.onBreak();*/
+				//TileMultiblock te = TileMultiblock.get(world, pos);
+				///if (te == null) {
+				//	world.destroyBlock(pos, true);
+				///	continue;
+				//}
+				//te.onBreak();
 			}
 		}
 		
@@ -223,22 +250,22 @@ public abstract class BaVMultiblockHandler {
 		protected BlockPos getPos(BlockPos offset) {
 			return origin.add(offset.rotate(rot));
 		}
-		/*
+		
 		protected TileMultiblock getTile(BlockPos offset) {
-			TileMultiblock te = TileMultiblock.get(world, getPos(offset));
-			if (te == null) {
-				if (!world.isRemote) {
-					ImmersiveRailroading.warn("Multiblock TE is null: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
-				}
+			//TileMultiblock te = TileMultiblock.get(world, getPos(offset));
+			//if (te == null) {
+			//	if (!world.isRemote) {
+		//			log.warn("Multiblock TE is null: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
+		//		}
 				return null;
-			}
-			if (!te.isLoaded()) {
-				if (!world.isRemote) {
-					ImmersiveRailroading.info("Multiblock is still loading: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
-				}
-				return null;
-			}
-			return te;
-		}*/
+		//	}
+		//	if (!te.isLoaded()) {
+		//		if (!world.isRemote) {
+		//			log.info("Multiblock is still loading: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
+		//		}
+				//return null;
+		//	}
+			//return te;
+		}
 	}
 }
