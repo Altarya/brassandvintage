@@ -5,6 +5,7 @@ import alty.brassandvintagecore.fluids.BaVFluids;
 import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.multiblocks.BaVTarDistiller;
+import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
 import alty.brassandvintagecore.objects.IHasModel;
 import alty.brassandvintagecore.world.gen.BaVOreGen;
 import alty.brassandvintagecore.world.gen.BaVTarLake;
@@ -46,6 +47,7 @@ public class RegistryHandler {
 	
 	public static void registerBaVMultiblocks() {
 		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
+		BaVMultiblockRegister.register("TAR_DISTILLER", new BaVTarDistiller());
 	}
 	
 	public static void registerBaVCommon() {
