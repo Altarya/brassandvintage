@@ -248,7 +248,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 				this.markDirty();
 			}
 		} else {
-			ImmersiveRailroading.net.sendToServer(new MultiblockSelectCraftPacket(getPos(), craftItem, mode));
+			net.sendToServer(new MultiblockSelectCraftPacket(getPos(), craftItem, mode));
 		}
 	}
 	
@@ -264,7 +264,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 				this.markDirty();
 			}
 		} else {
-			ImmersiveRailroading.net.sendToServer(new MultiblockSelectCraftPacket(getPos(), selected, craftMode));
+			net.sendToServer(new MultiblockSelectCraftPacket(getPos(), selected, craftMode));
 		}
 	}*/
 	
