@@ -1,5 +1,6 @@
 package alty.brassandvintagecore.util;
 
+import alty.brassandvintagecore.blocks.BaVBlocks;
 import alty.brassandvintagecore.multiblocks.common.MultiblockComponent;
 import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.util.MiscUtils.Chatter;
@@ -214,10 +215,10 @@ public abstract class BaVMultiblockHandler {
 				BlockPos pos = getPos(offset);
 				IBlockState origState = world.getBlockState(pos);
 				
-				//world.setBlockState(pos, IRBlocks.BLOCK_MULTIBLOCK.getDefaultState());
-				//TileMultiblock te = TileMultiblock.get(world, pos);
+				world.setBlockState(pos, BaVBlocks.BAV_MULTIBLOCK.getDefaultState());
+				TileMultiblock te = TileMultiblock.get(world, pos);
 				
-				//te.configure(name, rot, offset, origState);
+				te.configure(name, rot, offset, origState);
 			}
 		}
 		public abstract boolean onBlockActivated(EntityPlayer player, EnumHand hand, BlockPos offset);
@@ -235,12 +236,12 @@ public abstract class BaVMultiblockHandler {
 					continue;
 				}
 				BlockPos pos = getPos(offset);
-				//TileMultiblock te = TileMultiblock.get(world, pos);
-				///if (te == null) {
-				//	world.destroyBlock(pos, true);
-				///	continue;
-				//}
-				//te.onBreak();
+				TileMultiblock te = TileMultiblock.get(world, pos);
+				if (te == null) {
+					world.destroyBlock(pos, true);
+					continue;
+				}
+				te.onBreak();
 			}
 		}
 		
@@ -252,20 +253,20 @@ public abstract class BaVMultiblockHandler {
 		}
 		
 		protected TileMultiblock getTile(BlockPos offset) {
-			//TileMultiblock te = TileMultiblock.get(world, getPos(offset));
-			//if (te == null) {
-			//	if (!world.isRemote) {
-		//			log.warn("Multiblock TE is null: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
-		//		}
+			TileMultiblock te = TileMultiblock.get(world, getPos(offset));
+			if (te == null) {
+				if (!world.isRemote) {
+					log.warn("Multiblock TE is null: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
+				}
 				return null;
-		//	}
-		//	if (!te.isLoaded()) {
-		//		if (!world.isRemote) {
-		//			log.info("Multiblock is still loading: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
-		//		}
-				//return null;
-		//	}
-			//return te;
+			}
+			if (!te.isLoaded()) {
+				if (!world.isRemote) {
+					log.info("Multiblock is still loading: %s %s %s %s", getPos(offset), offset, world.isRemote, this.getClass());
+				}
+				return null;
+			}
+			return te;
 		}
 	}
 }

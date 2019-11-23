@@ -1,12 +1,14 @@
 package alty.brassandvintagecore.util;
 
 import alty.brassandvintagecore.blocks.BaVBlocks;
+import alty.brassandvintagecore.blocks.BaVMultiblockBlock;
 import alty.brassandvintagecore.fluids.BaVFluids;
 import alty.brassandvintagecore.init.BavInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.multiblocks.BaVTarDistiller;
 import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
 import alty.brassandvintagecore.objects.IHasModel;
+import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.world.gen.BaVOreGen;
 import alty.brassandvintagecore.world.gen.BaVTarLake;
 import blusunrize.immersiveengineering.api.MultiblockHandler;
@@ -48,6 +50,7 @@ public class RegistryHandler {
 	public static void registerBaVMultiblocks() {
 		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
 		BaVMultiblockRegister.register("TAR_DISTILLER", new BaVTarDistiller());
+		GameRegistry.registerTileEntity(TileMultiblock.class, BaVMultiblockBlock.NAME);
 	}
 	
 	public static void registerBaVCommon() {
