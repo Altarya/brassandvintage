@@ -11,18 +11,21 @@ import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecor
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDevice1;
 import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
 import alty.brassandvintagecore.multiblocks.common.MultiblockComponent;
+import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.util.BaVMultiblockHandler;
 import alty.brassandvintagecore.util.OreDictHandler;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
@@ -164,14 +167,14 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 	}
 	
 	
-	private static MultiblockComponent STONE = new MultiblockComponent(Blocks.STONEBRICK);
-	private static MultiblockComponent SAND = new MultiblockComponent(Blocks.SAND);
 	public static final String NAME = "TAR_DISTILLER";
 	private static final BlockPos render = new BlockPos(3,3,7);
-	private static final BlockPos fluid = new BlockPos(3,3,3);
+	private static final BlockPos fluidRender1 = new BlockPos(3,3,3);
+	private static final BlockPos fluidRender2 = new BlockPos(3,3,3);
 	private static final BlockPos craft = new BlockPos(3,2,3);
 	private static final BlockPos output = new BlockPos(3,2,14);
 	private static final BlockPos power = new BlockPos(3,7,0);
+	private static final BlockPos center = new BlockPos(4,1,0);
 	public static final double max_volume = 5 * 4 * 4.5 * 9;
 
 	private static MultiblockComponent[][][] tardistiller() {
@@ -228,7 +231,7 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 					}
 						if(structure[l][h][w]==null)
 						{
-							structure[l][h][w] = new MultiblockComponent();
+							structure[l][h][w] = AIR;
 						}	
 
 				}
@@ -244,7 +247,7 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 	
 	@Override
 	public BlockPos placementPos() {
-		return new BlockPos(7, 11, 4);
+		return new BlockPos(0, 0, 0);
 	}
 
 	@Override
@@ -259,8 +262,18 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 
 		@Override
 		public boolean onBlockActivated(EntityPlayer player, EnumHand hand, BlockPos offset) {
-			player.sendMessage(new TextComponentString("I am here!"));
-			return true;
+			if (isCenter(offset)) {
+				if (!world.isRemote) {
+					BlockPos pos = getPos(offset);
+					player.sendMessage(new TextComponentString("I am here!"));
+				}
+				return true;
+			}
+			return false;
+		}
+		@Override
+		public boolean isCenter(BlockPos offset) {
+			return offset.equals(center);
 		}
 
 		@Override
@@ -300,7 +313,28 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 		@Override
 		public void tick(BlockPos offset) {
 			// TODO Auto-generated method stub
+			if (!isCenter(offset)) {
+				return;
+			}
+			TileMultiblock te = getTile(offset);
+			if (te == null) {
+				return;
+			}
 			
+			TileMultiblock powerTe = getTile(power);
+			if (powerTe == null) {
+				return;
+			}
+			
+			if (!hasPower()) {
+				return;
+			}
+			if (world.isRemote) {
+				if (te.getRenderTicks() % 10 == 0 && te.getCraftProgress() != 0) {
+					world.playSound(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, 1.0f, 0.2f, false);
+				}
+				return;
+			}
 		}
 	}
 }

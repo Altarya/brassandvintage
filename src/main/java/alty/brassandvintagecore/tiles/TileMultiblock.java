@@ -98,7 +98,6 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		nbt = super.writeToNBT(nbt);
-		
 		if (name == null) {
 			// Probably in some weird block break path
 			return nbt;
@@ -115,7 +114,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 		nbt.setInteger("craftMode", craftMode.ordinal());
 		
 		nbt.setInteger("energy", energy.getEnergyStored());
-		
+		System.out.println(offset);
 		return nbt;
 	}
 	
@@ -197,6 +196,12 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 	}
 
 	public boolean onBlockActivated(EntityPlayer player, EnumHand hand) {
+		//return true;
+		System.out.println(player);
+		System.out.println(hand);
+		System.out.println(offset);
+		System.out.println(getMultiblock());
+		System.out.println(getMultiblock().onBlockActivated(player, hand, offset));
 		return getMultiblock().onBlockActivated(player, hand, offset);
 	}
 	
@@ -240,7 +245,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 	public CraftingMachineMode getCraftMode() {
 		return craftMode;
 	}
-	/*
+	
 	public void setCraftMode(CraftingMachineMode mode) {
 		if (!world.isRemote) {
 			if (craftMode != mode) {
@@ -248,7 +253,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 				this.markDirty();
 			}
 		} else {
-			net.sendToServer(new MultiblockSelectCraftPacket(getPos(), craftItem, mode));
+			//net.sendToServer(new MultiblockSelectCraftPacket(getPos(), craftItem, mode));
 		}
 	}
 	
@@ -264,9 +269,9 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 				this.markDirty();
 			}
 		} else {
-			net.sendToServer(new MultiblockSelectCraftPacket(getPos(), selected, craftMode));
+			//net.sendToServer(new MultiblockSelectCraftPacket(getPos(), selected, craftMode));
 		}
-	}*/
+	}
 	
 	/*
 	 * Capabilities
@@ -332,5 +337,5 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 	        }
 		}
         return super.getCapability(capability, facing);
-}
+	}
 }

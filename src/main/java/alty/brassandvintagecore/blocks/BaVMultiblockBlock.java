@@ -35,7 +35,7 @@ public class BaVMultiblockBlock extends Block {
 			try {
 				te.breakBlock();
 			} catch (Exception ex) {
-				System.out.print("pee peee pooo poo: "+ex);
+				System.out.print("oh no pee peee pooo poo: "+ex);
 				// Something broke
 				// TODO figure out why
 				worldIn.setBlockToAir(pos);
@@ -69,7 +69,7 @@ public class BaVMultiblockBlock extends Block {
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		// TESR Renderer
-		return EnumBlockRenderType.INVISIBLE;
+		return EnumBlockRenderType.MODEL;
 	}
 
 
@@ -81,5 +81,5 @@ public class BaVMultiblockBlock extends Block {
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
-}
+	}
 }

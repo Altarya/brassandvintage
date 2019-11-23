@@ -48,9 +48,9 @@ public class RegistryHandler {
 	}
 	
 	public static void registerBaVMultiblocks() {
+		GameRegistry.registerTileEntity(TileMultiblock.class, BaVMultiblockBlock.NAME);
 		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
 		BaVMultiblockRegister.register("TAR_DISTILLER", new BaVTarDistiller());
-		GameRegistry.registerTileEntity(TileMultiblock.class, BaVMultiblockBlock.NAME);
 	}
 	
 	public static void registerBaVCommon() {

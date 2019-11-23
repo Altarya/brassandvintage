@@ -29,7 +29,7 @@ public class SyncdTileEntity extends TileEntity {
 	public boolean isLoaded() {
 		return this.hasWorld() && (!world.isRemote || hasTileData);
 	}
-
+	
 	@Override
 	public void markDirty() {
 		super.markDirty();

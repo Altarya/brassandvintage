@@ -35,7 +35,6 @@ public abstract class BaVMultiblockHandler {
 	private final MultiblockComponent[][][] components;
 	private final String name;
 	protected final List<BlockPos> componentPositions;
-	protected final ArrayList<BlockPos> componentMirror;
 	
 	protected static final MultiblockComponent AIR = new MultiblockComponent();
 	protected static final MultiblockComponent STEEL() {
@@ -79,16 +78,6 @@ public abstract class BaVMultiblockHandler {
 				}
 			}
 		}
-		componentMirror = new ArrayList<BlockPos>();
-		for (int z = components.length-1; z >= 0; z--) {
-			MultiblockComponent[][] zcomp = components[z];
-			for (int y = components[z].length-1; y >= 0; y--) {
-				MultiblockComponent[] ycomp = zcomp[y];
-				for (int x = ycomp.length-1; x >= 0; x--) {
-					componentMirror.add(new BlockPos(x, y, z));
-				}
-			}
-		}
 	}
 	protected MultiblockComponent lookup(BlockPos offset) {
 		return components[offset.getZ()][offset.getY()][offset.getX()];
@@ -115,23 +104,6 @@ public abstract class BaVMultiblockHandler {
 						instance(world, origin, rot).onCreate();
 					}
 					System.out.println("tried to create, created");
-					return true;
-				}
-			}
-		}
-		//Mirror
-		for (BlockPos activationLocation : this.componentMirror) {
-			for (Rotation rot : Rotation.values()) {
-				BlockPos origin = pos.subtract(activationLocation.rotate(rot));
-				boolean valid = true;
-				for (BlockPos offset : this.componentMirror) {
-					valid = valid && checkValid(world, origin, offset, rot);
-				}
-				if (valid) {
-					if (!world.isRemote) {
-						instance(world, origin, rot).onCreate();
-					}
-					System.out.println("tried to create, created, mirror");
 					return true;
 				}
 			}
@@ -229,6 +201,7 @@ public abstract class BaVMultiblockHandler {
 		public abstract boolean isOutputSlot(BlockPos offset, int slot);
 		public abstract int getSlotLimit(BlockPos offset, int slot);
 		public abstract boolean canRecievePower(BlockPos offset);
+		public abstract boolean isCenter(BlockPos offset);
 		public void onBreak() {
 			for (BlockPos offset : componentPositions) {
 				MultiblockComponent comp = lookup(offset);
