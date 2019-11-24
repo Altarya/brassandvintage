@@ -1,7 +1,7 @@
 package alty.brassandvintagecore.items;
 
 
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.objects.IHasModel;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -12,7 +12,7 @@ public class BaVItemBase extends Item implements IHasModel{
 		public BaVItemBase(String name) {
 			setUnlocalizedName(name);
 			setRegistryName(name);
-			setCreativeTab(CreativeTabs.MATERIALS);
+			setCreativeTab(BaVInitialization.BAV_TAB);
 			
 			BaVItems.ITEMS.add(this);
 			
@@ -20,6 +20,6 @@ public class BaVItemBase extends Item implements IHasModel{
 
 		@Override
 		public void registerModels() {
-				BavInitialization.proxy.registerItemRenderer(this, 0, "inventory");
+				BaVInitialization.proxy.registerItemRenderer(this, 0, "inventory");
 		}
 }

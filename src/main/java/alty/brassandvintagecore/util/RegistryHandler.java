@@ -3,7 +3,7 @@ package alty.brassandvintagecore.util;
 import alty.brassandvintagecore.blocks.BaVBlocks;
 import alty.brassandvintagecore.blocks.BaVMultiblockBlock;
 import alty.brassandvintagecore.fluids.BaVFluids;
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.multiblocks.BaVTarDistiller;
 import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@EventBusSubscriber(modid = BavInitialization.MODID)
+@EventBusSubscriber(modid = BaVInitialization.MODID)
 public class RegistryHandler {
 	
 	@SubscribeEvent

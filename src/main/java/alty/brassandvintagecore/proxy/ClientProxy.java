@@ -1,6 +1,6 @@
 package alty.brassandvintagecore.proxy;
 
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.init.manual.BaVIntroduction;
 import blusunrize.immersiveengineering.api.ManualHelper;
 import blusunrize.lib.manual.ManualInstance;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class ClientProxy extends CommonProxy{
 	@Override
 	public void preInitStart(FMLPreInitializationEvent event){
-		OBJLoader.INSTANCE.addDomain(BavInitialization.MODID);
+		OBJLoader.INSTANCE.addDomain(BaVInitialization.MODID);
 	}
 	
 	@Override
@@ -25,7 +25,7 @@ public class ClientProxy extends CommonProxy{
 
 	@Override
 	public void registerVariantRenderer(Item item, int meta, String filename, String id) {
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(new ResourceLocation(BavInitialization.MODID, filename), id));
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(new ResourceLocation(BaVInitialization.MODID, filename), id));
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 package alty.brassandvintagecore.blocks;
 
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.tiles.TileMultiblock;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.block.Block;
@@ -23,8 +23,8 @@ public class BaVMultiblockBlock extends Block {
 		super(Material.IRON);
 		setHardness(2.0F);
 		
-        setUnlocalizedName(BavInitialization.MODID + ":" + NAME);
-        setRegistryName(new ResourceLocation(BavInitialization.MODID, NAME));
+        setUnlocalizedName(BaVInitialization.MODID + ":" + NAME);
+        setRegistryName(new ResourceLocation(BaVInitialization.MODID, NAME));
 	}
 	
 	@Override

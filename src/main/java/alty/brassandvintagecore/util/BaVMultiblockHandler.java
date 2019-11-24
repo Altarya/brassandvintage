@@ -91,7 +91,6 @@ public abstract class BaVMultiblockHandler {
 	}
 	
 	public boolean tryCreate(World world, BlockPos pos) {
-		//Normal
 		for (BlockPos activationLocation : this.componentPositions) {
 			for (Rotation rot : Rotation.values()) {
 				BlockPos origin = pos.subtract(activationLocation.rotate(rot));
@@ -103,12 +102,10 @@ public abstract class BaVMultiblockHandler {
 					if (!world.isRemote) {
 						instance(world, origin, rot).onCreate();
 					}
-					System.out.println("tried to create, created");
 					return true;
 				}
 			}
 		}
-		System.out.println("tried to create, but failed");
 		return false;
 	}
 	

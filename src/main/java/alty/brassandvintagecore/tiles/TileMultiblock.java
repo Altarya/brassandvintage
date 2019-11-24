@@ -114,7 +114,6 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 		nbt.setInteger("craftMode", craftMode.ordinal());
 		
 		nbt.setInteger("energy", energy.getEnergyStored());
-		System.out.println(offset);
 		return nbt;
 	}
 	
@@ -201,6 +200,12 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 		System.out.println(hand);
 		System.out.println(offset);
 		System.out.println(getMultiblock());
+		if(offset == null) {
+			System.out.println("origin is null!");
+			offset = getPos();
+			return true;
+		}
+		markDirty();
 		System.out.println(getMultiblock().onBlockActivated(player, hand, offset));
 		return getMultiblock().onBlockActivated(player, hand, offset);
 	}

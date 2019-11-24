@@ -133,7 +133,6 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 
 	@Override
 	public ItemStack[][][] getStructureManual() {
-		// TODO Auto-generated method stub
 		return structure;
 	}
 
@@ -145,7 +144,6 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 
 	@Override
 	public boolean overwriteBlockRender(ItemStack stack, int iterator) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -162,8 +160,6 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 
 	@Override
 	public void renderFormedStructure() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	
@@ -320,7 +316,6 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 			if (te == null) {
 				return;
 			}
-			
 			TileMultiblock powerTe = getTile(power);
 			if (powerTe == null) {
 				return;

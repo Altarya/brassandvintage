@@ -2,7 +2,7 @@ package alty.brassandvintagecore.world.gen;
 
 import java.util.Random;
 
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.objects.IStructure;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.server.MinecraftServer;
@@ -35,7 +35,7 @@ public class BaVWorldGenStructure extends WorldGenerator implements IStructure{
 	public static void generateStructure(World world, BlockPos pos) {
 		MinecraftServer mcServer = world.getMinecraftServer();
 		TemplateManager manager = worldServer.getStructureTemplateManager();
-		ResourceLocation location = new ResourceLocation(BavInitialization.MODID, structureName);
+		ResourceLocation location = new ResourceLocation(BaVInitialization.MODID, structureName);
 		Template template = manager.get(mcServer, location);
 		
 		if(template != null) {

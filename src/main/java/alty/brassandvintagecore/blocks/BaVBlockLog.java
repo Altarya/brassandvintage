@@ -1,7 +1,7 @@
 package alty.brassandvintagecore.blocks;
 
 import alty.brassandvintagecore.blocks.item.BaVItemBlockVariants;
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.objects.IHasModel;
 import alty.brassandvintagecore.objects.IMetaName;
@@ -32,7 +32,7 @@ public class BaVBlockLog extends BlockLog implements IHasModel, IMetaName {
         setUnlocalizedName(name);
         setRegistryName(name);
         setSoundType(SoundType.WOOD);
-        setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+        setCreativeTab(BaVInitialization.BAV_TAB);
         setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumHandler.EnumType.RUBBER_LOG_VERTICAL).withProperty(LOG_AXIS, EnumAxis.Y));
 
         BaVBlocks.BLOCKS.add(this);
@@ -96,6 +96,6 @@ public class BaVBlockLog extends BlockLog implements IHasModel, IMetaName {
     @Override
     public void registerModels() {
         EnumSet.allOf(EnumHandler.EnumType.class)
-                .forEach(variant -> BavInitialization.proxy.registerVariantRenderer(Item.getItemFromBlock(this), variant.getMeta(), "log_" + variant.getName(), "inventory"));
+                .forEach(variant -> BaVInitialization.proxy.registerVariantRenderer(Item.getItemFromBlock(this), variant.getMeta(), "log_" + variant.getName(), "inventory"));
     }
 }

@@ -1,7 +1,9 @@
 package alty.brassandvintagecore.init;
 
+import alty.brassandvintagecore.materials.BaVCreativeTab;
 import alty.brassandvintagecore.proxy.CommonProxy;
 import alty.brassandvintagecore.util.RegistryHandler;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -13,18 +15,20 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = BavInitialization.MODID, name = BavInitialization.NAME, version = BavInitialization.VERSION)
-public class BavInitialization
+@Mod(modid = BaVInitialization.MODID, name = BaVInitialization.NAME, version = BaVInitialization.VERSION)
+public class BaVInitialization
 {
     public static final String MODID = "brassandvintagecore";
     public static final String NAME = "Brass and Vintage - Machines";
     public static final String VERSION = "0.1";
     public static final String COMMON_PROXY_CLASS = "alty.brassandvintagecore.proxy.CommonProxy";
     public static final String CLIENT_PROXY_CLASS = "alty.brassandvintagecore.proxy.ClientProxy";
+    
+    public static final CreativeTabs BAV_TAB = new BaVCreativeTab();
 
     
     @Mod.Instance
-    public static BavInitialization instance;
+    public static BaVInitialization instance;
     @SidedProxy(clientSide = CLIENT_PROXY_CLASS, serverSide = COMMON_PROXY_CLASS)
     public static CommonProxy proxy;
 

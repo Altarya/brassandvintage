@@ -2,7 +2,7 @@ package alty.brassandvintagecore.items;
 
 import java.util.HashSet;
 
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
 import alty.brassandvintagecore.objects.IHasModel;
 import net.minecraft.block.Block;
@@ -22,9 +22,9 @@ public static final String NAME = "item_hand_screwgun";
 	
 	public HandScrewgun() {
 		super(2, -3.2F, ToolMaterial.IRON, new HashSet<Block>());
-		this.setUnlocalizedName(BavInitialization.MODID + ":" + NAME);
-		this.setRegistryName(new ResourceLocation(BavInitialization.MODID, NAME));
-        this.setCreativeTab(CreativeTabs.MISC);
+		this.setUnlocalizedName(BaVInitialization.MODID + ":" + NAME);
+		this.setRegistryName(new ResourceLocation(BaVInitialization.MODID, NAME));
+        this.setCreativeTab(BaVInitialization.BAV_TAB);
         BaVItems.ITEMS.add(this);
 	}
 	@Override
@@ -42,6 +42,6 @@ public static final String NAME = "item_hand_screwgun";
 	
 	@Override
 	public void registerModels() {
-			BavInitialization.proxy.registerItemRenderer(this, 0, "inventory");
+			BaVInitialization.proxy.registerItemRenderer(this, 0, "inventory");
 	}
 }

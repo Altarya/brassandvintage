@@ -1,6 +1,6 @@
 package alty.brassandvintagecore.blocks;
 
-import alty.brassandvintagecore.init.BavInitialization;
+import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.objects.IHasModel;
 import net.minecraft.block.Block;
@@ -15,7 +15,7 @@ public class BaVBlockBase extends Block implements IHasModel {
 		super(material);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		setCreativeTab(BaVInitialization.BAV_TAB);
 		
 		BaVBlocks.BLOCKS.add(this);
 		BaVItems.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
@@ -23,6 +23,6 @@ public class BaVBlockBase extends Block implements IHasModel {
 
 	@Override
 	public void registerModels() {
-		BavInitialization.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "normal");
+		BaVInitialization.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "normal");
 	}
 }
