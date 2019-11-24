@@ -144,7 +144,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public double getMaxRenderDistanceSquared() {
-		return Math.pow(ImmersiveRailroading.proxy.getRenderDistance()*16, 2);
+		return Math.pow(proxy.getRenderDistance()*16, 2);
 	}*/
 
 	@Override
