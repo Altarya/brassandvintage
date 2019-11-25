@@ -20,7 +20,6 @@ public class BaVConfigHandler {
 	
 	
 	private static final String COMMON = "general";
-	static Map<String, Map<String, Double>> fuelConfigMapsTo = new HashMap<String, Map<String, Double>>();
 	
 
 	public static void initFuels() {
@@ -29,7 +28,7 @@ public class BaVConfigHandler {
 			Map<String, Map<String, Double>> fuelConfigMaps = new HashMap<String, Map<String, Double>>();
 			Field BaVfuelConfigMapsField = ConfigSystem.class.getDeclaredField("fuelConfigMaps");
 			BaVfuelConfigMapsField.setAccessible(true);
-			fuelConfigMaps = (Map<String, Map<String, Double>>) BaVfuelConfigMapsField.get(ConfigSystem.class);
+			fuelConfigMaps = (Map<String, Map<String, Double>>) BaVfuelConfigMapsField.get(null);
 			List<String> fuelNames = new ArrayList<String>();
 			for(String packPartName : PackParserSystem.getAllPartPackNames()){
 				PackPartObject packPart = PackParserSystem.getPartPack(packPartName);
@@ -43,8 +42,8 @@ public class BaVConfigHandler {
 				String[] defaultValues = new String[] {};
 				switch(fuelName){
 				//TODO
-					case "liquidsteam": 
-						defaultValues = new String[]{"water:1.0", "gasoline:1.0"}; 
+					case "steam": 
+						defaultValues = new String[]{"water:1.0", "distilled_water:2.0"}; 
 						break;
 					default:
 						continue;
@@ -59,10 +58,10 @@ public class BaVConfigHandler {
 				
 				fuelConfigMaps.put(fuelName, fluidPotencies);
 				BaVfuelConfigMapsField.set(null, fuelConfigMaps);
-				fuelConfigMapsTo = fuelConfigMaps;
 				SuperLogger.logger.info("Brass and Vintage has added its fuel types", 0);
-				SuperLogger.logger.warn("Registered Fuels: "+BaVfuelConfigMapsField.get(ConfigSystem.class));
+				SuperLogger.logger.warn("Registered Fuels: "+BaVfuelConfigMapsField.get(null));
 			}
+			ConfigSystem.config.save();
 			config.save();
 		} catch (NoSuchFieldException | IllegalAccessException e) {
 		       e.printStackTrace();
