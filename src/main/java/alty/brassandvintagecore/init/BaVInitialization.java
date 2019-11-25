@@ -1,8 +1,12 @@
 package alty.brassandvintagecore.init;
 
+import java.io.File;
+
 import alty.brassandvintagecore.materials.BaVCreativeTab;
 import alty.brassandvintagecore.proxy.CommonProxy;
+import alty.brassandvintagecore.util.BaVConfigHandler;
 import alty.brassandvintagecore.util.RegistryHandler;
+import alty.brassandvintagecore.util.SuperLogger;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -38,13 +42,22 @@ public class BaVInitialization
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	SuperLogger.logger = event.getModLog();
         RegistryHandler.registerBaVCommon();
+    }
+    
+    @EventHandler
+    public void postInit(FMLPreInitializationEvent event)
+    {
+        proxy.initConfig(event.getSuggestedConfigurationFile());
+    	BaVConfigHandler.initFuels();
     }
     
     @EventHandler
 	public void postInit(FMLPostInitializationEvent event){
     	RegistryHandler.registerBaVMultiblocks();
 		proxy.postInitEnd(event);
+		BaVConfigHandler.wrapConfigToMTS();
     }
 
     @SubscribeEvent

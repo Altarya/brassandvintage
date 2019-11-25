@@ -31,6 +31,7 @@ import java.util.Map;
 
 @Slf4j
 public abstract class BaVMultiblockHandler {
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BaVMultiblockHandler.class);
 	//VERY IMPORTANT: THIS ARRAY IS **Z Y X**, UNLIKE IE'S WHICH IS **Y Z X**!!!!!!!
 	private final MultiblockComponent[][][] components;
 	private final String name;
