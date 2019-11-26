@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "check_decay=true,decayable=true": {
+      "model": "brassandvintagecore:leaves_rubbertree"
+    },
+    "check_decay=true,decayable=false": {
+      "model": "brassandvintagecore:leaves_rubbertree"
+    },
+    "check_decay=false,decayable=true": {
+      "model": "brassandvintagecore:leaves_rubbertree"
+    },
+    "check_decay=false,decayable=false": {
+      "model": "brassandvintagecore:leaves_rubbertree"
+    }
+  }
+}

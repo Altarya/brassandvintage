@@ -1,3 +1,6 @@
 {
-   "parent": "brassandvintagecore:block/sapling_rubbertree"
+   "parent": "item/generated",
+   "textures": {
+      "layer0": "brassandvintagecore:blocks/sapling_rubbertree"
+   }
 }

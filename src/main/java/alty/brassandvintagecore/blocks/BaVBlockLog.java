@@ -33,7 +33,7 @@ public class BaVBlockLog extends BlockLog implements IHasModel, IMetaName {
         setRegistryName(name);
         setSoundType(SoundType.WOOD);
         setCreativeTab(BaVInitialization.BAV_TAB);
-        setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumHandler.EnumType.RUBBER_LOG_VERTICAL).withProperty(LOG_AXIS, EnumAxis.Y));
+        setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumHandler.EnumType.RUBBER_LOG).withProperty(LOG_AXIS, EnumAxis.Y));
 
         BaVBlocks.BLOCKS.add(this);
         BaVItems.ITEMS.add(new BaVItemBlockVariants(this).setRegistryName(this.getRegistryName()));

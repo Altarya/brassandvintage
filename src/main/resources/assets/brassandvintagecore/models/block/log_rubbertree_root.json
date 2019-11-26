@@ -1,0 +1,7 @@
+{
+   "parent": "block/cube_column",
+   "textures": {
+       "end": "brassandvintagecore:blocks/log_rubbertree_side",
+       "side": "brassandvintagecore:blocks/log_rubbertree_side"
+   }
+}

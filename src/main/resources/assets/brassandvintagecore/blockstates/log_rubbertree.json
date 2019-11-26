@@ -1,28 +1,28 @@
 {
   "variants": {
-    "axis=x,variant=rubbertree_vertical": {
-      "model": "brassandvintagecore:log_rubbertree_vertical"
+    "axis=x,variant=rubbertree": {
+      "model": "brassandvintagecore:log_rubbertree"
     },
-    "axis=x,variant=rubbertree_horizontal": {
-      "model": "brassandvintagecore:log_rubbertree_horizontal"
+    "axis=x,variant=rubbertree_root": {
+      "model": "brassandvintagecore:log_rubbertree_root"
     },
-    "axis=y,variant=rubbertree_vertical": {
-      "model": "brassandvintagecore:log_rubbertree_vertical"
+    "axis=y,variant=rubbertree": {
+      "model": "brassandvintagecore:log_rubbertree"
     },
-    "axis=y,variant=rubbertree_horizontal": {
-      "model": "brassandvintagecore:log_rubbertree_horizontal"
+    "axis=y,variant=rubbertree_root": {
+      "model": "brassandvintagecore:log_rubbertree_root"
     },
-    "axis=z,variant=rubbertree_vertical": {
-      "model": "brassandvintagecore:log_rubbertree_vertical"
+    "axis=z,variant=rubbertree": {
+      "model": "brassandvintagecore:log_rubbertree"
     },
-    "axis=z,variant=rubbertree_horizontal": {
-      "model": "brassandvintagecore:log_rubbertree_horizontal"
+    "axis=z,variant=rubbertree_root": {
+      "model": "brassandvintagecore:log_rubbertree_root"
     },
-    "axis=none,variant=rubbertree_vertical": {
-      "model": "brassandvintagecore:log_rubbertree_vertical"
+    "axis=none,variant=rubbertree": {
+      "model": "brassandvintagecore:log_rubbertree"
     },
-    "axis=none,variant=rubbertree_horizontal": {
-      "model": "brassandvintagecore:log_rubbertree_horizontal"
+    "axis=none,variant=rubbertree_root": {
+      "model": "brassandvintagecore:log_rubbertree_root"
     }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "brassandvintagecore:sapling_rubbertree"
+    },
+    "stage=1": {
+      "model": "brassandvintagecore:sapling_rubbertree"
+    }
+  }
+}
