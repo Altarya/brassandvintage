@@ -1,6 +1,6 @@
 {
   "general": {
-    "type" : "engine_car",
+    "type" : "steam_engine_car",
 		"materials" : ["minecraft:piston:0:9", "minecraft:obsidian:0:5", "minecraft:iron_ingot:0:1"]
   },
 	
@@ -10,8 +10,9 @@
     "starterDuration" : 20,
     "maxRPM" : 1600,
     "fuelConsumption" : 0.2,
-	"fuelType" : "liquidsteam",
-    "gearRatios" : [-4.0, 0.0, 2.75, 1.0]
+	"fuelType" : "steam",
+    "gearRatios" : [-4.0, 0.0, 2.75, 1.0],
+	"steamType" : "liquid"
 	},
    "rendering": {
 		"rotatableModelObjects" : [

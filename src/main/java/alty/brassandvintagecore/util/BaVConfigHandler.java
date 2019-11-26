@@ -43,7 +43,7 @@ public class BaVConfigHandler {
 				switch(fuelName){
 				//TODO
 					case "steam": 
-						defaultValues = new String[]{"water:1.0", "distilled_water:2.0"}; 
+						defaultValues = new String[]{"water:0.5", "distilled_water:1.0", "purified_water:0.9"}; 
 						break;
 					default:
 						continue;
@@ -61,6 +61,7 @@ public class BaVConfigHandler {
 				SuperLogger.logger.info("Brass and Vintage has added its fuel types", 0);
 				SuperLogger.logger.warn("Registered Fuels: "+BaVfuelConfigMapsField.get(null));
 			}
+			config.getCategory(BAV_FUEL_CONFIG);
 			ConfigSystem.config.save();
 			config.save();
 		} catch (NoSuchFieldException | IllegalAccessException e) {

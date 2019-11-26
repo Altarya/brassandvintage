@@ -42,7 +42,7 @@ public class MTSPackLoader{
 	//Pack version.  May be linked to from other packs to force specific versions.  Otherwise unused.
 	public static final String MODVER="${version}";
 	//Mods/packs and the versions needed to run this pack.  Put whatever you want, but always leave MTS in here to ensure players have it loaded.
-	public static final String DEPS="required-after:mts@[15.0.0,);required-after:immersiveengineering@[0.12-89,);";
+	public static final String DEPS="required-after:mts@[15.0.0,);required-after:immersiveengineering@[0.12-89,);required-after:brassandvintagecore@[0.1,);";
 	//What MC versions this pack supports.  If you're using an older MTSPackLoader file and older JSON you can support 1.10.2-1.12.2.
 	public static final String MCVERS="[1.12.2,]";
 	
@@ -74,6 +74,8 @@ public class MTSPackLoader{
 				//Use a list to save the names so we can sort them so they appear in order in the Creative Tabs.
 				List<String> entryNames = new ArrayList<String>();
 				
+				List<String> bav_entryNames = new ArrayList<String>();
+				
 				//Capitalize the first letter of the content name and use it to get the appropriate method.
 				Method addContentMethod = packParserSystem.getMethod("add" + contentName.substring(0, 1).toUpperCase() + contentName.substring(1) + "Definition", InputStreamReader.class, String.class, String.class);
 				
@@ -82,9 +84,18 @@ public class MTSPackLoader{
 				Enumeration<? extends ZipEntry> entries = jarFile.entries();
 				while(entries.hasMoreElements()){
 					ZipEntry entry = entries.nextElement();
-					if(entry.getName().endsWith(".json") && entry.getName().contains("jsondefs/" + contentName + "s")){
+					if(entry.getName().endsWith(".json") && entry.getName().contains("jsondefs/bav_" + contentName + "s")){
+						bav_entryNames.add(entry.getName());
+					}
+					else if(entry.getName().endsWith(".json") && entry.getName().contains("jsondefs/" + contentName + "s")){
 						entryNames.add(entry.getName());
 					}
+				}
+				
+				bav_entryNames.sort(null);
+				for(String entryName : bav_entryNames){
+					String entryFileName = entryName.substring(entryName.lastIndexOf('/') + 1, entryName.length() - ".json".length());
+					addContentMethod.invoke(null, new InputStreamReader(jarFile.getInputStream(jarFile.getEntry(entryName))), entryFileName, MODID);
 				}
 				
 				//Sort the list and add send all items to MTS.
@@ -93,6 +104,9 @@ public class MTSPackLoader{
 					String entryFileName = entryName.substring(entryName.lastIndexOf('/') + 1, entryName.length() - ".json".length());
 					addContentMethod.invoke(null, new InputStreamReader(jarFile.getInputStream(jarFile.getEntry(entryName))), entryFileName, MODID);
 				}
+				
+				
+				
 				jarFile.close();
 			}
 		}catch(Exception e){
@@ -120,6 +134,16 @@ public class MTSPackLoader{
 			Method getItemsMethod = registry.getMethod("getItemsForPack", String.class);
 			List<Item> itemList = (List<Item>) getItemsMethod.invoke(null, MODID);
 			
+			Class bavregistry = Class.forName("alty.brassandvintagecore.util.RegistryHandler");
+			Method getBaVItemsMethod = bavregistry.getMethod("getBaVItemsForPack", String.class);
+			List<Item> BaVitemList = ((List<Item>) getBaVItemsMethod.invoke(null, MODID));
+			
+			for(Item item : BaVitemList){
+				item.setRegistryName(new ResourceLocation(MODID, item.getUnlocalizedName().replace("item." + MODID + ".", "")));
+				event.getRegistry().register(item);
+				System.out.println("Registering: "+item);
+			}
+			
 			//Now register the pack items.  Use the unlocalized name as it's the only thing we can set MTS-side 
 			//that packs can see.  The name will be in the format of item.modid.name, so make sure to prune the 
 			//item.modid. portion to get a reasonable registry name.
@@ -127,6 +151,7 @@ public class MTSPackLoader{
 				item.setRegistryName(new ResourceLocation(MODID, item.getUnlocalizedName().replace("item." + MODID + ".", "")));
 				event.getRegistry().register(item);
 			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
