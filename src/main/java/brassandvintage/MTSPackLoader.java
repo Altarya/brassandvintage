@@ -79,12 +79,15 @@ public class MTSPackLoader{
 				//Capitalize the first letter of the content name and use it to get the appropriate method.
 				Method addContentMethod = packParserSystem.getMethod("add" + contentName.substring(0, 1).toUpperCase() + contentName.substring(1) + "Definition", InputStreamReader.class, String.class, String.class);
 				
+				Class BaVpackParserSystem = Class.forName("alty.brassandvintagecore.transformers.MTSPackParserTransformer");
+				Method bavaddContentMethod = BaVpackParserSystem.getMethod("addPartDefinition", InputStreamReader.class, String.class, String.class);
+				
 				//Search the jarfile this class is located in and find all the files in the assets/<MODID>/jsondefs/<contentName> section.
 				ZipFile jarFile = new ZipFile(classDir);
 				Enumeration<? extends ZipEntry> entries = jarFile.entries();
 				while(entries.hasMoreElements()){
 					ZipEntry entry = entries.nextElement();
-					if(entry.getName().endsWith(".json") && entry.getName().contains("jsondefs/bav_" + contentName + "s")){
+					if(entry.getName().endsWith(".json") && entry.getName().contains("bavjsons" + contentName + "s")){
 						bav_entryNames.add(entry.getName());
 					}
 					else if(entry.getName().endsWith(".json") && entry.getName().contains("jsondefs/" + contentName + "s")){
@@ -95,7 +98,7 @@ public class MTSPackLoader{
 				bav_entryNames.sort(null);
 				for(String entryName : bav_entryNames){
 					String entryFileName = entryName.substring(entryName.lastIndexOf('/') + 1, entryName.length() - ".json".length());
-					addContentMethod.invoke(null, new InputStreamReader(jarFile.getInputStream(jarFile.getEntry(entryName))), entryFileName, MODID);
+					bavaddContentMethod.invoke(null, new InputStreamReader(jarFile.getInputStream(jarFile.getEntry(entryName))), entryFileName, MODID);
 				}
 				
 				//Sort the list and add send all items to MTS.
