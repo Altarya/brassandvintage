@@ -1,12 +1,14 @@
 package alty.brassandvintagecore.blocks;
 
 import alty.brassandvintagecore.init.BaVInitialization;
+import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.tiles.TileMultiblock;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -25,6 +27,8 @@ public class BaVMultiblockBlock extends Block {
 		
         setUnlocalizedName(BaVInitialization.MODID + ":" + NAME);
         setRegistryName(new ResourceLocation(BaVInitialization.MODID, NAME));
+        BaVBlocks.BLOCKS.add(this);
+		BaVItems.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
 	}
 	
 	@Override
@@ -55,7 +59,7 @@ public class BaVMultiblockBlock extends Block {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		return true;
@@ -68,8 +72,7 @@ public class BaVMultiblockBlock extends Block {
 	
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		// TESR Renderer
-		return EnumBlockRenderType.MODEL;
+		return EnumBlockRenderType.INVISIBLE;
 	}
 
 

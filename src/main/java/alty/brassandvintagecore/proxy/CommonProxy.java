@@ -3,6 +3,7 @@ package alty.brassandvintagecore.proxy;
 import java.io.File;
 
 import alty.brassandvintagecore.util.BaVConfigHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -15,5 +16,10 @@ public class CommonProxy {
 	
 	public void initConfig(File configFile){
 		BaVConfigHandler.initCommon(configFile);
+	}
+	public void Init(FMLPreInitializationEvent event) {	}
+	
+	public EntityPlayer getPlayerClient() {
+		return null;
 	}
 }

@@ -43,6 +43,7 @@ public class BaVInitialization
     public void preInit(FMLPreInitializationEvent event)
     {
     	SuperLogger.logger = event.getModLog();
+    	proxy.preInitStart(event);
         RegistryHandler.registerBaVCommon();
         proxy.initConfig(event.getSuggestedConfigurationFile());
     }
@@ -50,14 +51,14 @@ public class BaVInitialization
     @EventHandler
     public void init(FMLPreInitializationEvent event)
     {
-       
+       proxy.Init(event);
     }
     
     @EventHandler
 	public void postInit(FMLPostInitializationEvent event){
     	RegistryHandler.registerBaVMultiblocks();
-		proxy.postInitEnd(event);
     	BaVConfigHandler.initFuels();
+    	proxy.postInitEnd(event);
     }
 
     @SubscribeEvent

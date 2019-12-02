@@ -79,11 +79,11 @@ public class RegistryHandler {
             }
         }
 	}
-	
+	@SuppressWarnings("deprecation")
 	public static void registerBaVMultiblocks() {
 		GameRegistry.registerTileEntity(TileMultiblock.class, BaVMultiblockBlock.NAME);
 		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
-		BaVMultiblockRegister.register("TAR_DISTILLER", new BaVTarDistiller());
+		BaVMultiblockRegister.register(BaVTarDistiller.NAME, new BaVTarDistiller());
 	}
 	
 	public static void registerBaVCommon() {

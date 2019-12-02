@@ -87,7 +87,6 @@ public abstract class BaVMultiblockHandler {
 	private boolean checkValid(IBlockAccess world, BlockPos origin, BlockPos offset, Rotation rot) {
 		BlockPos pos = origin.add(offset.rotate(rot));
 		MultiblockComponent component = lookup(offset);
-		System.out.println(component.valid(world, pos));
 		return component.valid(world, pos);
 	}
 	
@@ -185,6 +184,7 @@ public abstract class BaVMultiblockHandler {
 				BlockPos pos = getPos(offset);
 				IBlockState origState = world.getBlockState(pos);
 				
+
 				world.setBlockState(pos, BaVBlocks.BAV_MULTIBLOCK.getDefaultState());
 				TileMultiblock te = TileMultiblock.get(world, pos);
 				

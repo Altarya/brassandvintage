@@ -2,6 +2,7 @@ package alty.brassandvintagecore.tiles;
 
 import javax.annotation.Nonnull;
 
+import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
 import alty.brassandvintagecore.util.BaVMultiblockHandler.MultiblockInstance;
 import net.minecraft.block.state.IBlockState;
@@ -17,6 +18,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -28,13 +30,14 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileMultiblock extends SyncdTileEntity implements ITickable {
+	
 	public static TileMultiblock get(IBlockAccess world, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		return te instanceof TileMultiblock ? (TileMultiblock) te : null;
 	}
 	
 	private IBlockState replaced;
-	private BlockPos offset;
+	public BlockPos offset;
 	private Rotation rotation;
 	private String name;
 	private CraftingMachineMode craftMode = CraftingMachineMode.STOPPED;
@@ -98,6 +101,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		nbt = super.writeToNBT(nbt);
+		
 		if (name == null) {
 			// Probably in some weird block break path
 			return nbt;
@@ -114,6 +118,7 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 		nbt.setInteger("craftMode", craftMode.ordinal());
 		
 		nbt.setInteger("energy", energy.getEnergyStored());
+		
 		return nbt;
 	}
 	
@@ -195,18 +200,6 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 	}
 
 	public boolean onBlockActivated(EntityPlayer player, EnumHand hand) {
-		//return true;
-		System.out.println(player);
-		System.out.println(hand);
-		System.out.println(offset);
-		System.out.println(getMultiblock());
-		if(offset == null) {
-			System.out.println("origin is null!");
-			offset = getPos();
-			return true;
-		}
-		markDirty();
-		System.out.println(getMultiblock().onBlockActivated(player, hand, offset));
 		return getMultiblock().onBlockActivated(player, hand, offset);
 	}
 	

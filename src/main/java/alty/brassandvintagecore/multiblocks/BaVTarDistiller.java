@@ -279,7 +279,8 @@ public class BaVTarDistiller extends BaVMultiblockHandler implements IMultiblock
 
 		@Override
 		public int getInvSize(BlockPos offset) {
-			return output.equals(offset) ? 1 : 0;
+			//return output.equals(offset) ? 1 : 0;
+			return 0;
 		}
 
 		@Override

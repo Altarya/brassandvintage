@@ -1,0 +1,429 @@
+{
+  "definitions" : [
+		{
+			"subName" : "_black",
+    	"extraMaterials" : ["minecraft:dye:1:1", "minecraft:dye:15:1"]
+		},
+		{
+			"subName" : "_red",
+    	"extraMaterials" : ["minecraft:dye:1:1", "minecraft:dye:15:1"]
+		},
+		{
+			"subName" : "_white",
+    	"extraMaterials" : ["minecraft:dye:11:1", "minecraft:dye:4:1"]
+		}
+	],
+	
+  "general": {
+    "type" : "car",
+		"openTop" : true,
+		"emptyMass" : 544,
+		"materials" : ["minecraft:iron_ingot:0:18"]
+  },
+
+  "motorized" : {
+    "fuelCapacity" : 20000,
+    "hornSound" : "brassandvintage:horn1",
+     "instruments" : [
+			{
+				"pos" : [-0.05, 1.08, 2.93],
+				"rot" : [19, 0, 0],
+				"hudpos" : [43.5, 63],
+				"scale" : 0.01953125,
+				"hudScale" : 0.9
+			},
+			{
+				"pos" : [-0.21, 1.08, 2.93],
+				"rot" : [19, 0, 0],
+				"hudpos" : [68, 66.25],
+				"scale" : 0.01953125,
+				"hudScale" : 0.65
+			}
+		],
+		"controls" : []
+  },
+
+  "car" : {
+		"isBigTruck" : false,
+    "isFrontWheelDrive" : false,
+		"isRearWheelDrive" : true,
+		"axleRatio" : 3.63,
+    "dragCoefficient" : 0.9
+  },
+	
+	"parts": [
+		{
+      "pos" : [-0.940, 0.013, -0.0085],
+      "types" : ["wheel"],
+			"minValue" : 0.40,
+			"maxValue" : 1.0
+    },
+		{
+      "pos" : [0.934, 0.013, -0.0085],
+      "types" : ["wheel"],
+			"minValue" : 0.40,
+			"maxValue" : 1.0
+    },
+		{
+      "pos" : [-0.940, 0.013, 3.995],
+      "types" : ["wheel"],
+			"minValue" : 0.40,
+			"maxValue" : 1.0,
+			"turnsWithSteer" : true
+    },
+		{
+      "pos" : [0.935, 0.013, 3.995],
+      "types" : ["wheel"],
+			"minValue" : 0.40,
+			"maxValue" : 1.0,
+			"turnsWithSteer" : true
+		},
+		{
+      "pos" : [0.4375, 0.99, 1.8125],
+      "types" : ["seat"],
+      "isController" : true
+    },
+		{
+      "pos" : [-0.4475, 0.99, 0.59],
+      "types" : ["seat"],
+			"minValue" : 0,
+			"maxValue" : 3
+    },
+		{
+      "pos" : [0.4375, 0.99, 1.8125],
+      "types" : ["seat"],
+			"minValue" : 0,
+			"maxValue" : 3
+    },
+	{
+      "pos" : [-0.4475, 0.99, 0.59],
+      "types" : ["seat"],
+			"minValue" : 0,
+			"maxValue" : 3
+    },
+	{
+      "pos" : [-0.4625, 0.875, -0.5375],
+      "types" : ["crate", "barrel"],
+			"minValue" : 0,
+			"maxValue" : 100
+    },
+	{
+      "pos" : [0.4625, 0.875, -0.5375],
+      "types" : ["crate", "barrel"],
+			"minValue" : 0,
+			"maxValue" : 100
+    },
+	{
+      "pos" : [-0.0033, 0.169, 3.775],
+      "types" : ["custom"],
+			"customTypes" : ["enginecover"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [-0.01, 0.19, 3.999],
+      "types" : ["custom"],
+			"customTypes" : ["handcrank"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.029, 0.75, 1.6],
+      "types" : ["custom"],
+			"customTypes" : ["largeseat"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.029, 0.75, 0.35],
+      "types" : ["custom"],
+			"customTypes" : ["largeseat"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.0, 1.22, 0.21],
+      "types" : ["custom"],
+			"customTypes" : ["roof"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.0, 0.35, -0.05],
+      "types" : ["custom"],
+			"customTypes" : ["trailerhook"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.0, 0.45, -0.25],
+      "types" : ["custom"],
+			"customTypes" : ["extratire"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.91, 0.72, 0.805],
+      "types" : ["custom"],
+			"customTypes" : ["doorright"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [0.91, 0.72, 2.367],
+      "types" : ["custom"],
+			"customTypes" : ["doorright"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [-0.91, 0.72, 0.805],
+      "types" : ["custom"],
+			"customTypes" : ["doorleft"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+	{
+      "pos" : [-0.91, 0.72, 2.367],
+      "types" : ["custom"],
+			"customTypes" : ["doorleft"],
+			"minValue" : 0,
+			"maxValue" : 10.0
+    },
+		{
+      "pos" : [0.0, 0.17, 3.40],
+      "types" : ["engine_car"],
+			"minValue" : 0.0,
+			"maxValue" : 1.25
+    }
+  ],
+	
+  "collision": [
+    /*{
+      "pos" : [-0.6, 0.2, 1.0],
+      "width" : 1.2,
+      "height" : 0.1
+    },
+		 {
+      "pos" : [0.6, 0.2, 1.0],
+      "width" : 1.2,
+      "height" : 0.1
+    },
+	{
+      "pos" : [-0.6, 0.2, 2.0],
+      "width" : 1.2,
+      "height" : 0.1
+    },
+		 {
+      "pos" : [0.6, 0.2, 2.0],
+      "width" : 1.2,
+      "height" : 0.1
+    },
+	{
+      "pos" : [-0.6, 0.2, 2.7],
+      "width" : 1.2,
+      "height" : 0.1
+    },
+		 {
+      "pos" : [0.6, 0.2, 2.7],
+      "width" : 1.2,
+      "height" : 0.1
+    },*/
+	{
+      "pos" : [-0.4, 1.0, 1.6],
+      "width" : 0.7,
+      "height" : 0.2
+    },
+	{
+      "pos" : [0.4, 1.0, 1.6],
+      "width" : 0.7,
+      "height" : 0.2
+    },
+	{
+      "pos" : [-0.4, 1.0, 0.2],
+      "width" : 0.7,
+      "height" : 0.2
+    },
+	{
+      "pos" : [0.4, 1.0, 0.2],
+      "width" : 0.7,
+      "height" : 0.2
+    },
+	{
+      "pos" : [0.0, 1.0, 3.8],
+      "width" : 0.7,
+      "height" : 0.2
+    },
+	{
+      "pos" : [0.0, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 0.3
+    },
+	{
+      "pos" : [0.3, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 0.3
+    },
+	{
+      "pos" : [0.5, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 0.3
+    },
+	{
+      "pos" : [0.7, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 0.3
+    },
+	{
+      "pos" : [-0.3, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 0.3
+    },
+	{
+      "pos" : [-0.5, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 0.3
+    },
+	{
+      "pos" : [-0.7, 1.1, 3.0],
+      "width" : 0.2,
+      "height" : 0.3
+    },
+		{
+      "pos" : [0, 2.425, 2.0],
+      "width" : 2.2,
+      "height" : 0.15
+    },
+		{
+      "pos" : [0, 2.425, 0.9],
+      "width" : 2.2,
+      "height" : 0.15
+    }
+  ],
+
+  "rendering": {
+		"numberWindows" : 1,
+		"defaultDisplayText" : "RZ-00",
+		 "hudBackplaneTexturePercentages" : [0.5, 0.625, 0.078125, 0.203125],
+		"hudMouldingTexturePercentages" : [0.5, 0.625, 0.078125, 0.203125],
+    "displayTextMaxLength" : 6,
+		"textMarkings" : [
+			{
+				"pos" : [0.0, 0.5, -0.32],
+				"rot" : [0, 180, 0],
+				"scale" : 0.15,
+				"color" : "#000000"
+			}
+		],
+		"rotatableModelObjects" : [
+			{
+				"partName" : "$Accelerator",
+				"rotationPoint" : [0.256581, 1.192792, 2.932147],
+				"rotationAxis" : [0.0, 0.0, 1.0],
+				"rotationVariable" : "throttle"
+			},
+			{
+				"partName" : "$EngineSparkControl",
+				"rotationPoint" : [0.361623, 1.192792, 2.932148],
+				"rotationAxis" : [1.0, 1.0, 1.0],
+				"rotationVariable" : "starter_0"
+			},
+			{
+				"partName" : "$EngineSparkControl",
+				"rotationPoint" : [0.361623, 1.192792, 2.932148],
+				"rotationAxis" : [1.0, 1.0, -1.0],
+				"rotationVariable" : "magneto_0"
+			},
+			{
+				"partName" : "$Brake",
+				"rotationPoint" : [0.090352, 0.170487, 2.618160],
+				"rotationAxis" : [1.000000, 0.000000, 0.000000],
+				"rotationVariable" : "brake"
+			},
+			{
+				"partName" : "$Handbrake",
+				"rotationPoint" : [0.715352, 0.139237, 2.430660],
+				"rotationAxis" : [-0.500000, 0.000000, 0.000000],
+				"rotationVariable" : "p_brake"
+			},
+			{
+				"partName" : "$Clutch",
+				"rotationPoint" : [0.465352, 0.170487, 2.618160],
+				"rotationAxis" : [1.000000, 0.000000, 0.000000],
+				"rotationVariable" : "gearshift"
+			},
+			{
+				"partName" : "$SteeringWheel",
+				"rotationPoint" : [0.309102, 1.375618, 2.787812],
+				"rotationAxis" : [0.0, 0.766000, -0.642800],
+				"rotationVariable" : "steeringwheel"
+			},
+			{
+				"partName" : "$SteeringShaft",
+				"rotationPoint" : [0.297564, 0.076680, 3.736085],
+				"rotationAxis" : [0.861300, 0.173700, -0.477400],
+				"rotationVariable" : "steeringwheel"
+			},
+			{
+				"partName" : "$FrontSteering",
+				"rotationPoint" : [-0.003398, 0.107987, 3.993160],
+				"rotationAxis" : [0.0, 0.1, 0.0],
+				"rotationVariable" : "steeringwheel"
+			},
+			{
+				"partName" : "$LeftFrontwheel",
+				"rotationPoint" : [-0.003398, 0.107987, 3.993160],
+				"rotationAxis" : [0.0, 0.1, 0.0],
+				"rotationVariable" : "steeringwheel"
+			},
+			{
+				"partName" : "$RightFrontwheel",
+				"rotationPoint" : [-0.003398, 0.107987, 3.993160],
+				"rotationAxis" : [0.0, 0.1, 0.0],
+				"rotationVariable" : "steeringwheel"
+			},
+			{
+				"partName" : "$RightFrontwheel",
+				"rotationPoint" : [-0.909648, 0.014237, 3.993160],
+				"rotationAxis" : [1.0, 0.0, 0.0],
+				"rotationVariable" : "driveshaft"
+			},
+			{
+				"partName" : "$LeftFrontwheel",
+				"rotationPoint" : [0.902852, 0.014237, 3.993160],
+				"rotationAxis" : [1.0, 0.0, 0.0],
+				"rotationVariable" : "driveshaft"
+			},
+			{
+				"partName" : "$Exhaust",
+				"rotationPoint" : [0.0, 0.001, 0.0],
+				"rotationAxis" : [0.000000, 0.000000, 1.000000],
+				"rotationVariable" : "engine"
+			},
+			{
+				"partName" : "$Exhaust",
+				"rotationPoint" : [0.0, -0.001, 0.0],
+				"rotationAxis" : [0.000000, 0.000000, -1.000000],
+				"rotationVariable" : "engine"
+			},
+			{
+				"partName" : "$BackDriveshaft",
+				"rotationPoint" : [0.934102, 0.014237, -0.006840],
+				"rotationAxis" : [1.0, 0.0, 0.0],
+				"rotationVariable" : "driveshaft"
+			},
+			{
+				"partName" : "$FrontSteeringTop",
+				"rotationPoint" : [-0.003398, 0.107987, 3.993160],
+				"rotationAxis" : [0.0, 0.1, 0.0],
+				"rotationVariable" : "steeringwheel"
+			},
+			{
+				"partName" : "$Driveshaft",
+				"rotationPoint" : [-0.003398, 0.045478, 3.085819],
+				"rotationAxis" : [0.000000, 0.017400, 0.999800],
+				"rotationVariable" : "driveshaft"
+			}
+		]
+  }
+}

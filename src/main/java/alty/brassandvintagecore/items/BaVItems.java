@@ -21,4 +21,5 @@ public class BaVItems {
 	//Tools and Armor
 	public static final Item HAND_SCREWGUN = new HandScrewgun();
 	//Misc
+	public static final Item DEBUG_ROD = new DebugStick();
 }
