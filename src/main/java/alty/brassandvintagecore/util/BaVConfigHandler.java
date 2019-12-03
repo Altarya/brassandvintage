@@ -10,13 +10,68 @@ import java.util.Map;
 
 import minecrafttransportsimulator.dataclasses.PackPartObject;
 import minecrafttransportsimulator.systems.*;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class BaVConfigHandler {
 	public static Configuration config;	
 	
 	private static final String BAV_FUEL_CONFIG = "fuel";
 	private static Map<String, Double> doubleConfigMap = new HashMap<String, Double>();
+	
+	private static final ArrayList<Property> SYNCED_PROPERTIES = new ArrayList<Property>();
+	public static NBTTagCompound syncPropNBT;
+
+	public static NBTTagCompound nbtToSyncConfig(){
+		NBTTagCompound out = new NBTTagCompound();
+		int i = 0;
+		for(Property prop : SYNCED_PROPERTIES){
+			switch(prop.getType()){
+				case BOOLEAN:
+					if(!prop.isList()){
+						out.setBoolean("p_" + i, prop.getBoolean());
+					}else{
+						//Not supported
+					}
+					break;
+				case COLOR:
+					//Not supported
+					break;
+				case DOUBLE:
+					if(!prop.isList()){
+						out.setDouble("p_" + i, prop.getDouble());
+					}else{
+						//Not supported
+					}
+					break;
+				case INTEGER:
+					if(!prop.isList()){
+						out.setInteger("p_" + i, prop.getInt());
+					}else{
+						//Not supported
+					}
+					break;
+				case MOD_ID:
+					//Not supported
+					break;
+				case STRING:
+					if(!prop.isList()){
+						out.setBoolean("p_" + i, prop.getBoolean());
+					}else{
+						out.setInteger("p_" + i, prop.getStringList().length);
+						for(int ind = 0; ind < prop.getStringList().length; ind++){
+							out.setString("p_" + i + "_" + ind, prop.getStringList()[ind]);
+						}
+					}
+					break;
+				default:
+					break;
+			}
+			i++;
+		}
+		return out;
+}
 	
 	
 	private static final String COMMON = "general";

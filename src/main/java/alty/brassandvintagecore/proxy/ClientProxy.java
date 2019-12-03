@@ -3,6 +3,8 @@ package alty.brassandvintagecore.proxy;
 import alty.brassandvintagecore.gui.BaVTab;
 import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.init.manual.BaVIntroduction;
+import alty.brassandvintagecore.items.GearFactory;
+import alty.brassandvintagecore.tiles.render.TESRHandler;
 import blusunrize.immersiveengineering.api.ManualHelper;
 import blusunrize.lib.manual.ManualInstance;
 import net.minecraft.client.Minecraft;
@@ -13,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import micdoodle8.mods.galacticraft.api.client.tabs.InventoryTabVanilla;
@@ -25,12 +28,14 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	@Override
-	public void Init(FMLPreInitializationEvent event){
+	public void Init(FMLInitializationEvent event){
 		if(TabRegistry.getTabList().isEmpty()) {
 			MinecraftForge.EVENT_BUS.register(new TabRegistry());
 			TabRegistry.registerTab(new InventoryTabVanilla());
 		}
 		TabRegistry.registerTab(new BaVTab());
+		GearFactory.clientInit();
+		TESRHandler.registerBlockRenderer();
 	}
 	
 	@Override

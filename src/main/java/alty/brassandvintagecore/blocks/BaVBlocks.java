@@ -23,6 +23,9 @@ public class BaVBlocks {
 	public static final Block VANADIUM_STEEL_BLOCK = new BaVBlockBase("block_vanadium_steel", Material.IRON);
 	//Machine Building
 	public static final Block BAV_MULTIBLOCK = new BaVMultiblockBlock();
+	public static final Block SIDED_GEAR_HOLDER = new SidedGearHolder();
+	public static final Block BIG_GEAR = new BigGear();
+	public static final Block BIG_GEAR_SLAVE = new BigGearSlave();
 	//Fluid Blocks
 	public static final Block TAR = new BaVBlockFluid("tar", BaVFluids.TAR, BaVCustomMaterials.THICK_OIL, 1, 50, 20, 200, true, 5000, true);
 	//Misc

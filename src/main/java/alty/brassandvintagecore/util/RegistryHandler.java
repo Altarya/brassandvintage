@@ -9,12 +9,15 @@ import java.util.Map;
 
 import alty.brassandvintagecore.blocks.BaVBlocks;
 import alty.brassandvintagecore.blocks.BaVMultiblockBlock;
+import alty.brassandvintagecore.blocks.SidedGearHolder;
 import alty.brassandvintagecore.fluids.BaVFluids;
 import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.items.BaVItems;
+import alty.brassandvintagecore.items.GearFactory;
 import alty.brassandvintagecore.multiblocks.BaVTarDistiller;
 import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
 import alty.brassandvintagecore.objects.IHasModel;
+import alty.brassandvintagecore.tiles.SidedGearHolderTileEntity;
 import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.transformers.MTSPackParserTransformer;
 import alty.brassandvintagecore.world.gen.BaVOreGen;
@@ -35,6 +38,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber(modid = BaVInitialization.MODID)
 public class RegistryHandler {
@@ -64,7 +69,10 @@ public class RegistryHandler {
 	@SubscribeEvent
     public static void onBlockRegister(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(BaVBlocks.BLOCKS.toArray(new Block[0]));
+        GearFactory.init();
+        
     }
+	
 	
 	@SubscribeEvent
 	public static void onModelRegister(ModelRegistryEvent event) {
@@ -82,6 +90,7 @@ public class RegistryHandler {
 	@SuppressWarnings("deprecation")
 	public static void registerBaVMultiblocks() {
 		GameRegistry.registerTileEntity(TileMultiblock.class, BaVMultiblockBlock.NAME);
+		GameRegistry.registerTileEntity(SidedGearHolderTileEntity.class, SidedGearHolder.NAME);
 		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
 		BaVMultiblockRegister.register(BaVTarDistiller.NAME, new BaVTarDistiller());
 	}

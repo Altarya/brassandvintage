@@ -4,6 +4,7 @@ import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.proxy.CommonProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -17,14 +18,17 @@ public class NetworkPacketManager {
 		return thePlayer;
 	}
 	
-	public void init(FMLInitializationEvent event) {
+	public static void preInit(FMLPreInitializationEvent event) {
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(BaVInitialization.MODID);
-		int packetid=0;
+		int packetId = 0;
+		network.registerMessage(SendStringToClient.class, SendStringToClient.class, packetId++, Side.CLIENT);
+		network.registerMessage(SendIntToClient.class, SendIntToClient.class, packetId++, Side.CLIENT);
+		network.registerMessage(SendSpinToClient.class, SendSpinToClient.class, packetId++, Side.CLIENT);
+		network.registerMessage(PacketOpenPlayerGUI.Handler.class, PacketOpenPlayerGUI.class,  packetId++, Side.SERVER);
 		
-		
-		network.registerMessage(PacketOpenPlayerGUI.Handler.class, PacketOpenPlayerGUI.class,  packetid++, Side.SERVER);
 		
 	}
+	
 
 }
