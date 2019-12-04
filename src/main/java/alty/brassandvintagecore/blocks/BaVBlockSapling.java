@@ -108,25 +108,13 @@ public class BaVBlockSapling extends BlockBush implements IGrowable, IHasModel {
 
     public void generateTree(World world, Random rand, BlockPos pos, IBlockState state) {
         if (TerrainGen.saplingGrowTree(world, rand, pos)) {
-            return;
-        }
-        WorldGenerator gen = rand.nextInt(10) == 0 ? new WorldGenBigTree(false) : new WorldGenTrees(false);
-        int i = 0, j = 0;
-        boolean flag = false;
+            WorldGenerator gen = rand.nextInt(10) == 0 ? new WorldGenBigTree(false) : new WorldGenTrees(false);
+            int i = 0, j = 0;
+            boolean flag = false;
 
-        gen = new BaVRubberTreeGen();
+            gen = new BaVRubberTreeGen();
 
-        IBlockState blockState = Blocks.AIR.getDefaultState();
-        if (flag) {
-            world.setBlockState(pos.add(0, 0, 0), blockState, 4);
-            world.setBlockState(pos.add(1, 0, 0), blockState, 4);
-            world.setBlockState(pos.add(0, 0, 1), blockState, 4);
-            world.setBlockState(pos.add(1, 0, 1), blockState, 4);
-        } else {
-            world.setBlockState(pos, blockState, 4);
-        }
-
-        if (!gen.generate(world, rand, pos)) {
+            IBlockState blockState = Blocks.AIR.getDefaultState();
             if (flag) {
                 world.setBlockState(pos.add(0, 0, 0), blockState, 4);
                 world.setBlockState(pos.add(1, 0, 0), blockState, 4);
@@ -135,9 +123,21 @@ public class BaVBlockSapling extends BlockBush implements IGrowable, IHasModel {
             } else {
                 world.setBlockState(pos, blockState, 4);
             }
-        }
 
-        gen.generate(world, rand, pos);
+            if (!gen.generate(world, rand, pos)) {
+                if (flag) {
+                    world.setBlockState(pos.add(0, 0, 0), blockState, 4);
+                    world.setBlockState(pos.add(1, 0, 0), blockState, 4);
+                    world.setBlockState(pos.add(0, 0, 1), blockState, 4);
+                    world.setBlockState(pos.add(1, 0, 1), blockState, 4);
+                } else {
+                    world.setBlockState(pos, blockState, 4);
+                }
+            }
+
+            System.out.println("Generating...");
+            gen.generate(world, rand, pos);
+        }
     }
 
     @Override
