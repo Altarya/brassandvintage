@@ -23,6 +23,8 @@ public class BaVConfigHandler {
 	private static final ArrayList<Property> SYNCED_PROPERTIES = new ArrayList<Property>();
 	public static NBTTagCompound syncPropNBT;
 
+
+
 	public static NBTTagCompound nbtToSyncConfig(){
 		NBTTagCompound out = new NBTTagCompound();
 		int i = 0;

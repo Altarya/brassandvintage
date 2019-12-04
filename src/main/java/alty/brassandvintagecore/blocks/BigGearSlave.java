@@ -40,12 +40,12 @@ public class BigGearSlave extends BlockContainer implements IHasModel{
 	private static final AxisAlignedBB WEST = new AxisAlignedBB(0D, 0D, 0D, .5D, 1D, 1D);
 	private static final AxisAlignedBB UP = new AxisAlignedBB(0D, .5D, 0D, 1D, 1D, 1D);
 	private static final AxisAlignedBB DOWN = new AxisAlignedBB(0D, 0D, 0D, 1D, .5D, 1D);
+	public static final String NAME = "big_gear_slave";
 	
 	public BigGearSlave(){
 		super(Material.IRON);
-		String name = "large_gear_slave";
-		setUnlocalizedName(name);
-		setRegistryName(name);
+		setUnlocalizedName(NAME);
+		setRegistryName(NAME);
 		setCreativeTab(BaVInitialization.BAV_TAB);
 		setHardness(3);
 		setSoundType(SoundType.METAL);

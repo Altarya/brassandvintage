@@ -1,6 +1,7 @@
 package alty.brassandvintagecore.tiles.render;
 
 import alty.brassandvintagecore.tiles.SidedGearHolderTileEntity;
+import alty.brassandvintagecore.tiles.TileAxle;
 import alty.brassandvintagecore.tiles.TileBigGear;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -13,6 +14,7 @@ public class TESRHandler {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(SidedGearHolderTileEntity.class, new BasicGearRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileBigGear.class, new BigGearRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileAxle.class, new AxleRenderHandler());
 		//ClientRegistry.bindTileEntitySpecialRenderer(ToggleGearTileEntity.class, new ToggleGearRenderer());
 	}
 

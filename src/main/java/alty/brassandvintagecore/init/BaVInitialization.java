@@ -61,6 +61,7 @@ public class BaVInitialization
     
     @EventHandler
 	public void postInit(FMLPostInitializationEvent event){
+    	RegistryHandler.registerBaVTileEntities();
     	RegistryHandler.registerBaVMultiblocks();
     	BaVConfigHandler.initFuels();
     	proxy.postInitEnd(event);

@@ -21,7 +21,7 @@ public class BasicGearRender extends TileEntitySpecialRenderer<SidedGearHolderTi
 		if(!gearHolder.getWorld().isBlockLoaded(gearHolder.getPos(), false)){
 			return;
 		}
-
+ 
 		Color color;
 		
 		for(EnumFacing side : EnumFacing.values()){

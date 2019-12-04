@@ -2,6 +2,7 @@ package alty.brassandvintagecore.util;
 
 import alty.brassandvintagecore.blocks.BaVBlocks;
 import alty.brassandvintagecore.multiblocks.common.MultiblockComponent;
+import alty.brassandvintagecore.tiles.TileDynamo;
 import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.util.MiscUtils.Chatter;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +66,10 @@ public abstract class BaVMultiblockHandler {
 	protected static final MultiblockComponent N_SHE() {
 		return new MultiblockComponent(OreDictHandler.NICKEL_SHEETM);
 	}
+	protected static final MultiblockComponent MOTORD() {
+		return new MultiblockComponent(BaVBlocks.ELECTRIC_MOTOR);
+	}
+	
 
 	protected BaVMultiblockHandler(String name, MultiblockComponent[][][] components) {
 		this.name = name;
@@ -180,6 +185,16 @@ public abstract class BaVMultiblockHandler {
 				if (comp == AIR) {
 					continue;
 				}
+				if (comp == MOTORD()) {
+					BlockPos pos = getPos(offset);
+					IBlockState origState = world.getBlockState(pos);
+					
+
+					world.setBlockState(pos, BaVBlocks.ELECTRIC_DYNAMO.getDefaultState());
+					TileMultiblock te = TileDynamo.get(world, pos);
+					
+					te.configure(name, rot, offset, origState);
+				}
 				
 				BlockPos pos = getPos(offset);
 				IBlockState origState = world.getBlockState(pos);
@@ -208,11 +223,13 @@ public abstract class BaVMultiblockHandler {
 				}
 				BlockPos pos = getPos(offset);
 				TileMultiblock te = TileMultiblock.get(world, pos);
-				if (te == null) {
+				TileMultiblock td = TileDynamo.get(world, pos);
+				if (te == null || td == null) {
 					world.destroyBlock(pos, true);
 					continue;
 				}
 				te.onBreak();
+				td.onBreak();
 			}
 		}
 		

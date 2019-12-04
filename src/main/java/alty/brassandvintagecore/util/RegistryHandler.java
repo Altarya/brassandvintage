@@ -7,17 +7,28 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import alty.brassandvintagecore.blocks.BaVAxle;
 import alty.brassandvintagecore.blocks.BaVBlocks;
 import alty.brassandvintagecore.blocks.BaVMultiblockBlock;
+import alty.brassandvintagecore.blocks.BigGear;
+import alty.brassandvintagecore.blocks.BigGearSlave;
+import alty.brassandvintagecore.blocks.ElectricDynamo;
+import alty.brassandvintagecore.blocks.ElectricMotor;
 import alty.brassandvintagecore.blocks.SidedGearHolder;
 import alty.brassandvintagecore.fluids.BaVFluids;
 import alty.brassandvintagecore.init.BaVInitialization;
 import alty.brassandvintagecore.items.BaVItems;
 import alty.brassandvintagecore.items.GearFactory;
+import alty.brassandvintagecore.multiblocks.BaVDynamo;
 import alty.brassandvintagecore.multiblocks.BaVTarDistiller;
 import alty.brassandvintagecore.multiblocks.common.BaVMultiblockRegister;
 import alty.brassandvintagecore.objects.IHasModel;
 import alty.brassandvintagecore.tiles.SidedGearHolderTileEntity;
+import alty.brassandvintagecore.tiles.TileAxle;
+import alty.brassandvintagecore.tiles.TileBigGear;
+import alty.brassandvintagecore.tiles.TileBigGearSlave;
+import alty.brassandvintagecore.tiles.TileDynamo;
+import alty.brassandvintagecore.tiles.TileElectricMotor;
 import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.transformers.MTSPackParserTransformer;
 import alty.brassandvintagecore.world.gen.BaVOreGen;
@@ -90,9 +101,21 @@ public class RegistryHandler {
 	@SuppressWarnings("deprecation")
 	public static void registerBaVMultiblocks() {
 		GameRegistry.registerTileEntity(TileMultiblock.class, BaVMultiblockBlock.NAME);
-		GameRegistry.registerTileEntity(SidedGearHolderTileEntity.class, SidedGearHolder.NAME);
 		MultiblockHandler.registerMultiblock(BaVTarDistiller.instance);
 		BaVMultiblockRegister.register(BaVTarDistiller.NAME, new BaVTarDistiller());
+		MultiblockHandler.registerMultiblock(BaVDynamo.instance);
+		BaVMultiblockRegister.register(BaVDynamo.NAME, new BaVDynamo());
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void registerBaVTileEntities() {
+		//Rotary
+		GameRegistry.registerTileEntity(SidedGearHolderTileEntity.class, SidedGearHolder.NAME);
+		GameRegistry.registerTileEntity(TileBigGear.class, BigGear.NAME);
+		GameRegistry.registerTileEntity(TileBigGearSlave.class, BigGearSlave.NAME);
+		GameRegistry.registerTileEntity(TileAxle.class, BaVAxle.NAME);
+		GameRegistry.registerTileEntity(TileElectricMotor.class, ElectricMotor.NAME);
+		GameRegistry.registerTileEntity(TileDynamo.class, ElectricDynamo.NAME);
 	}
 	
 	public static void registerBaVCommon() {

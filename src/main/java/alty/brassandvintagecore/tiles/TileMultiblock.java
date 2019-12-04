@@ -36,13 +36,13 @@ public class TileMultiblock extends SyncdTileEntity implements ITickable {
 		return te instanceof TileMultiblock ? (TileMultiblock) te : null;
 	}
 	
-	private IBlockState replaced;
+	public IBlockState replaced;
 	public BlockPos offset;
-	private Rotation rotation;
-	private String name;
-	private CraftingMachineMode craftMode = CraftingMachineMode.STOPPED;
-	private long ticks;
-	private MultiblockInstance mb;
+	public Rotation rotation;
+	public String name;
+	public CraftingMachineMode craftMode = CraftingMachineMode.STOPPED;
+	public long ticks;
+	public MultiblockInstance mb;
 	
 	//Crafting
 	private int craftProgress = 0;

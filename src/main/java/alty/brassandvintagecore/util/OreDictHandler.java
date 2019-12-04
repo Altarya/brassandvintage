@@ -82,6 +82,7 @@ public class OreDictHandler {
 	public static final OreAbstract FLUID_PIPE = new OreAbstract("pipeSteel", new ItemStack(IEContent.blockMetalDevice1, 1, BlockTypes_MetalDevice1.FLUID_PIPE.getMeta()));
 	public static final OreAbstract IRON_SHEETM = new OreAbstract("blockSheetmetalIron", new ItemStack(IEContent.blockSheetmetal, 1, BlockTypes_MetalsAll.IRON.getMeta()));
 	public static final OreAbstract NICKEL_SHEETM = new OreAbstract("blockSheetmetalNickel", new ItemStack(IEContent.blockSheetmetal, 1, BlockTypes_MetalsAll.NICKEL.getMeta()));
+	public static final OreAbstract RADIATOR = new OreAbstract("blockRadiator", new ItemStack(IEContent.blockMetalDecoration0, 1, BlockTypes_MetalDecoration0.RADIATOR.getMeta()));
 	
 	private static boolean oreDictionaryContainsMatch(boolean strict, NonNullList<ItemStack> ores, ItemStack playerStack) {
         for (ItemStack target : ores)
