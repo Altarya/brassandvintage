@@ -34,12 +34,12 @@ public class BaVTarLake implements IWorldGenerator {
 				int genz = chunkZ * 16;
 				Biome testBiome = world.provider.getBiomeForCoords(new BlockPos(genx, geny, genz));
 				
-				List<Biome> BlacklistTarLake = new ArrayList<Biome>();
-				BlacklistTarLake.add(Biomes.DEEP_OCEAN);
-				BlacklistTarLake.add(Biomes.OCEAN);
+				List<Biome> blacklistTarLake = new ArrayList<Biome>();
+				blacklistTarLake.add(Biomes.DEEP_OCEAN);
+				blacklistTarLake.add(Biomes.OCEAN);
+
 				
-				
-				if(BlacklistTarLake.contains(testBiome) == false) {
+				if(blacklistTarLake.contains(testBiome) == false) {
 					generateStructure(TAR_LAKE, world, random, chunkX, chunkZ, 40, 1000, 31, Blocks.STONE);
 				}
 				break;

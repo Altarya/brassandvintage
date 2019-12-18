@@ -89,11 +89,15 @@ public class BaVRubberTreeGen extends WorldGenAbstractTree {
 
                     if (logState.getBlock().isAir(logState, world, up) || logState.getBlock().isLeaves(logState, world, up)) {
                         setBlockAndNotifyAdequately(world, pos.up(logHeight), LOG);
-                        if (logHeight == 0 || logHeight == 4) {
-                            setBlockAndNotifyAdequately(world, pos.add(1, 0, 0), LOG_ROOT);
-                            setBlockAndNotifyAdequately(world, pos.add(0, 0, 1), LOG_ROOT);
-                            setBlockAndNotifyAdequately(world, pos.add(-1, 0, 0), LOG_ROOT);
-                            setBlockAndNotifyAdequately(world, pos.add(0, 0, -1), LOG_ROOT);
+                        if (logHeight == 0 || logHeight == 3) {
+                            setBlockAndNotifyAdequately(world, pos.up(logHeight).add(1, 0, 0), LOG_ROOT);
+                            setBlockAndNotifyAdequately(world, pos.up(logHeight).add(0, 0, 1), LOG_ROOT);
+                            setBlockAndNotifyAdequately(world, pos.up(logHeight).add(-1, 0, 0), LOG_ROOT);
+                            setBlockAndNotifyAdequately(world, pos.up(logHeight).add(0, 0, -1), LOG_ROOT);
+                        }
+                        if (logHeight == height - 1) {
+                            setBlockAndNotifyAdequately(world, pos.up(logHeight).add(0, 2, 0), LEAF);
+                            setBlockAndNotifyAdequately(world, pos.up(logHeight).add(0, 3, 0), LEAF);
                         }
                     }
                 }

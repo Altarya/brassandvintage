@@ -1,6 +1,5 @@
 package alty.brassandvintagecore.util;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -32,15 +31,10 @@ import alty.brassandvintagecore.tiles.TileElectricMotor;
 import alty.brassandvintagecore.tiles.TileMultiblock;
 import alty.brassandvintagecore.transformers.MTSPackParserTransformer;
 import alty.brassandvintagecore.world.gen.BaVOreGen;
+import alty.brassandvintagecore.world.gen.BaVRubberTree;
 import alty.brassandvintagecore.world.gen.BaVTarLake;
 import blusunrize.immersiveengineering.api.MultiblockHandler;
-import minecrafttransportsimulator.dataclasses.MTSRegistry;
-import minecrafttransportsimulator.items.core.ItemDecor;
-import minecrafttransportsimulator.items.core.ItemInstrument;
-import minecrafttransportsimulator.items.core.ItemItem;
-import minecrafttransportsimulator.items.core.ItemVehicle;
 import minecrafttransportsimulator.items.parts.AItemPart;
-import minecrafttransportsimulator.systems.ConfigSystem;
 import minecrafttransportsimulator.systems.PackParserSystem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -49,8 +43,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @EventBusSubscriber(modid = BaVInitialization.MODID)
 public class RegistryHandler {
@@ -123,7 +115,9 @@ public class RegistryHandler {
 		BaVFluids.registerFluids();
 		
 		GameRegistry.registerWorldGenerator(new BaVOreGen(), 0);
-		RenderHandler.registerustomMeshesAndStates();
+		RenderHandler.registerCustomMeshesAndStates();
+
+		GameRegistry.registerWorldGenerator(new BaVRubberTree(), 0);
 		
 		GameRegistry.registerWorldGenerator(new BaVTarLake(), 0);
 	}

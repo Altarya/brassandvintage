@@ -12,7 +12,7 @@ import net.minecraftforge.client.model.ModelLoader;
 public class RenderHandler {
 	
 	
-	public static void registerustomMeshesAndStates() {
+	public static void registerCustomMeshesAndStates() {
 		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(BaVBlocks.TAR),new ItemMeshDefinition() {
 			@Override
 			public ModelResourceLocation getModelLocation(ItemStack stack) {
